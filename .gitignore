@@ -1,0 +1,139 @@
+# Logs
+logs
+*.log
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Runtime data
+pids
+*.sock
+*.lock
+*.log
+*.db
+*.sqlite
+
+# OS X Files
+.DS_Store
+.DS_Store.lock
+.Spotlight-V100
+.Trashes
+ehthumbs
+Thumbs.db
+node_modules
+# Packages #
+# it is better to unpack these files out of node_modules/
+
+# Tests
+coverage
+*.lcov
+
+# Output of compilation
+lib-cov
+*.build
+*.suo
+*.ipp
+*.aps
+*.map
+*.bin
+*.out
+*.debug
+*.test
+*.dist
+*.dll
+*.exe
+*.dSYM
+*.jit
+*.cmi
+*.npm
+*.so
+*.otf
+*.obj
+*.lib
+*.jar
+*.war
+*.class
+*.pyo
+*.pyc
+*.pyd
+*.o
+*.d
+*.dylib
+*.egg-info
+*.egg
+local.cfg
+production.local.cfg
+*.local.cfg
+*.prod.local.cfg
+*.dev.local.cfg
+*.test.local.cfg
+
+# Serverless function logs
+*.functions Framework function logs
+
+# DynamoDB Local database stores
+*.local
+
+# Azure Functions logs
+*.functions
+*.functions.log
+
+# Gulp revocation cache
+.revocation-dir
+
+# Go cache
+_/bin
+_/pkg/**/cache
+
+# Macie Plist locale files
+*.lproj
+
+# Eclipse project settings
+.project
+.classpath
+.wtp
+
+# Visual Studio project and solution files
+*.csproj
+*.sln
+*.suo
+*.user
+*.userossc
+*.sdf
+*.opensdf
+
+# Visual Studio code cache
+%UserAppData%\Microsoft\VisualStudio\14.0
+
+# Package files #
+# NPM Local package storage
+npm-shrinkwrap.json
+node_modules/**
+*.tgz
+*.tar.gz
+
+# Bower JSON files
+bower.json
+
+# Webpack
+# These files are used to store the Webpack configuration
+# and compilation status
+# in the Webpack Configuration.
+webpack-stats.json
+
+# Testing frameworks
+mocha/
+jasmine/
+
+# Yarn Integrity file
+.yarn-integrity
+
+# Temporary SQLite database files
+*.sqlite3
+
+# Sublime Text workspace settings
+*.sublime-workspace
