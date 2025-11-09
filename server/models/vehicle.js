@@ -7,6 +7,7 @@ const vehicleSchema = new mongoose.Schema({
   color: { type: String, required: true },
   mileage: { type: Number, required: true },
   type: { type: String, required: true },
+  image: { type: String, required: true },
   location: { type: String, required: true },
   rentalPricePerDay: { type: Number, required: true },
   available: { type: Boolean, default: true },

@@ -12,8 +12,8 @@ module.exports = [
   {
     method: 'POST',
     path: '/vehicles',
-    handler: async (request, h) => {
-      const vehicle = new Vehicle(request.payload);
+    handler: async (request, h) => {  
+      const vehicle = new Vehicle({ ...request.payload, accepted: true });
       await vehicle.save();
       return { message: 'Vehicle added', id: vehicle._id };
     }

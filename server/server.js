@@ -17,7 +17,7 @@ const init = async () => {
 
     const server = Hapi.server({
       port: process.env.PORT || 3000,
-      host: process.env.HOST || 'localhost'
+      host: process.env.HOST || '0.0.0.0'
     });
 
     server.auth.scheme('jwtAuth', function () {
@@ -42,7 +42,6 @@ const init = async () => {
     });
 
     server.auth.strategy('jwt', 'jwtAuth');
-    server.auth.default('jwt'); 
 
     server.route(vehiclesRoutes);
     server.route(usersRoutes);
