@@ -1,0 +1,5 @@
+C:\Users\filip\Desktop\Inzynierka-main\MobileApp\node_modules\@react-native-async-storage\async-storage\android\build\generated\source\codegen\jni\CMakeLists.txt
+C:\Users\filip\Desktop\Inzynierka-main\MobileApp\node_modules\react-native-safe-area-context\android\src\main\jni\CMakeLists.txt
+C:\Users\filip\Desktop\Inzynierka-main\MobileApp\node_modules\react-native-screens\android\src\main\jni\CMakeLists.txt
+C:\Users\filip\Desktop\Inzynierka-main\MobileApp\node_modules\react-native-vector-icons\android\build\generated\source\codegen\jni\CMakeLists.txt
+C:\Users\filip\Desktop\Inzynierka-main\MobileApp\node_modules\react-native\ReactAndroid\cmake-utils\default-app-setup\CMakeLists.txt

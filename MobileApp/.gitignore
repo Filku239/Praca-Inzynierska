@@ -1,0 +1,56 @@
+# Node
+node_modules/
+npm-debug.log
+yarn-error.log
+yarn-debug.log
+package-lock.json
+yarn.lock
+
+# React Native
+android/app/build/
+ios/DerivedData/
+ios/build/
+ios/Pods/
+ios/Podfile.lock
+
+# Expo
+.expo/
+.expo-shared/
+
+# Logs
+*.log
+
+# MacOS
+.DS_Store
+
+# Editor directories and files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Buck
+buck-out/
+\.buckd/
+*.keystore
+
+# Fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots
+fastlane/test_output
+
+# Misc
+*.iml
+*.hprof
+
+# Android
+*.apk
+*.ap_
+*.aab
+
+# iOS
+*.xcworkspace
+*.xcodeproj/project.xcworkspace
+*.xcodeproj/xcuserdata/
+*.xcodeproj/xcshareddata/

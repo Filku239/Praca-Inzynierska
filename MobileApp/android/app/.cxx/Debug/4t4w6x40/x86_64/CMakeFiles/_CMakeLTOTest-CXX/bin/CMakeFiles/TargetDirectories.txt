@@ -1,0 +1,4 @@
+C:/Users/filip/Desktop/Inzynierka-main/MobileApp/android/app/.cxx/Debug/4t4w6x40/x86_64/CMakeFiles/_CMakeLTOTest-CXX/bin/CMakeFiles/foo.dir
+C:/Users/filip/Desktop/Inzynierka-main/MobileApp/android/app/.cxx/Debug/4t4w6x40/x86_64/CMakeFiles/_CMakeLTOTest-CXX/bin/CMakeFiles/boo.dir
+C:/Users/filip/Desktop/Inzynierka-main/MobileApp/android/app/.cxx/Debug/4t4w6x40/x86_64/CMakeFiles/_CMakeLTOTest-CXX/bin/CMakeFiles/edit_cache.dir
+C:/Users/filip/Desktop/Inzynierka-main/MobileApp/android/app/.cxx/Debug/4t4w6x40/x86_64/CMakeFiles/_CMakeLTOTest-CXX/bin/CMakeFiles/rebuild_cache.dir
