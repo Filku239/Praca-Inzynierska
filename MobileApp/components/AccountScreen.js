@@ -9,8 +9,9 @@ export default function AccountScreen() {
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
   const [loading, setLoading] = useState(false);
-  const [isLogin, setIsLogin] = useState(true); // true = login, false = register
+  const [isLogin, setIsLogin] = useState(true);
   const navigation = useNavigation();
+  const [role, setRole] = useState('');
 
   const handleAuth = async () => {
     setLoading(true);
@@ -22,7 +23,14 @@ export default function AccountScreen() {
 
       if (isLogin) {
         const token = response.data.token;
+        const username = response.data.username;
+        const email = response.data.email;
+        const role = response.data.role;
+
+        await AsyncStorage.setItem('role', role);
         await AsyncStorage.setItem('token', token);
+        await AsyncStorage.setItem('username', username);
+        await AsyncStorage.setItem('email', email);
         Alert.alert('Sukces', 'Zalogowano pomyślnie!');
         navigation.navigate('Vehicles');
       } else {
@@ -31,6 +39,7 @@ export default function AccountScreen() {
         setUsername('');
         setEmail('');
         setPassword('');
+        setRole('');
       }
     } catch (err) {
       console.error('Auth error:', err);

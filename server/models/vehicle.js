@@ -11,7 +11,8 @@ const vehicleSchema = new mongoose.Schema({
   location: { type: String, required: true },
   rentalPricePerDay: { type: Number, required: true },
   available: { type: Boolean, default: true },
-  accepted: { type: Boolean, default: false }
+  accepted: { type: Boolean, default: false },
+  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
 });
 
 module.exports = mongoose.model('Vehicle', vehicleSchema);

@@ -18,7 +18,12 @@ module.exports = [
                return h.response({ message: 'Invalid password' }).code(401);
            }
             const token = jwt.sign({ sub: user._id.toString() }, process.env.JWT_SECRET, { expiresIn: '15m' });
-           return h.response({ token }).code(200);
+           return h.response({ 
+            token, 
+            username: user.username,
+            email: user.email,
+            role: user.role 
+          }).code(200);
         }
     },
  {
@@ -48,7 +53,7 @@ module.exports = [
           .response({
             status: 'success',
             message: 'Użytkownik został zarejestrowany pomyślnie.',
-            user: { id: user._id, username: user.username, email: user.email },
+            user: { id: user._id, username: user.username, email: user.email},
           })
           .code(201);
       } catch (err) {
