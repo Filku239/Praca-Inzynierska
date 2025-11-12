@@ -12,6 +12,7 @@ export default function AccountScreen() {
   const [isLogin, setIsLogin] = useState(true);
   const navigation = useNavigation();
   const [role, setRole] = useState('');
+  const [userId,setId] = useState('');
 
   const handleAuth = async () => {
     setLoading(true);
@@ -26,11 +27,13 @@ export default function AccountScreen() {
         const username = response.data.username;
         const email = response.data.email;
         const role = response.data.role;
+        const id = response.data.id;
 
         await AsyncStorage.setItem('role', role);
         await AsyncStorage.setItem('token', token);
         await AsyncStorage.setItem('username', username);
         await AsyncStorage.setItem('email', email);
+        await AsyncStorage.setItem('user_id', id);
         Alert.alert('Sukces', 'Zalogowano pomyślnie!');
         navigation.navigate('Vehicles');
       } else {
@@ -40,6 +43,7 @@ export default function AccountScreen() {
         setEmail('');
         setPassword('');
         setRole('');
+        setId('');
       }
     } catch (err) {
       console.error('Auth error:', err);

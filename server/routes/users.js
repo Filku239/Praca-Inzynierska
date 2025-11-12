@@ -22,7 +22,8 @@ module.exports = [
             token, 
             username: user.username,
             email: user.email,
-            role: user.role 
+            role: user.role,
+            id: user._id
           }).code(200);
         }
     },

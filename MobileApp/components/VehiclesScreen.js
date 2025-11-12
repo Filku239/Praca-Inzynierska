@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, FlatList, Dimensions, Image } from 'react-nativ
 import axios from 'axios';
 
 const { width } = Dimensions.get('window');
-const ITEM_WIDTH = (width - 48) / 2; // padding i marginesy
+const ITEM_WIDTH = (width - 48) / 2;
 
 export default function VehiclesScreen() {
   const [vehicles, setVehicles] = useState([]);
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
     },
     priceContainer: {
       marginTop: 8,
-      backgroundColor: '#ff6347', // czerwony / pomarańczowy dla wyróżnienia ceny
+      backgroundColor: '#ff6347',
       paddingVertical: 6,
       borderRadius: 6,
       alignItems: 'center',

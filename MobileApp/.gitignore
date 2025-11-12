@@ -54,3 +54,7 @@ fastlane/test_output
 *.xcodeproj/project.xcworkspace
 *.xcodeproj/xcuserdata/
 *.xcodeproj/xcshareddata/
+
+
+.env
+config.js

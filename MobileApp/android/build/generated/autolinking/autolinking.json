@@ -28,6 +28,84 @@
         }
       }
     },
+    "@react-native-picker/picker": {
+      "root": "C:\\Users\\filip\\Desktop\\Inzynierka-main\\MobileApp\\node_modules\\@react-native-picker\\picker",
+      "name": "@react-native-picker/picker",
+      "platforms": {
+        "ios": {
+          "podspecPath": "C:\\Users\\filip\\Desktop\\Inzynierka-main\\MobileApp\\node_modules\\@react-native-picker\\picker\\RNCPicker.podspec",
+          "version": "2.11.4",
+          "configurations": [],
+          "scriptPhases": []
+        },
+        "android": {
+          "sourceDir": "C:\\Users\\filip\\Desktop\\Inzynierka-main\\MobileApp\\node_modules\\@react-native-picker\\picker\\android",
+          "packageImportPath": "import com.reactnativecommunity.picker.RNCPickerPackage;",
+          "packageInstance": "new RNCPickerPackage()",
+          "buildTypes": [],
+          "libraryName": "rnpicker",
+          "componentDescriptors": [
+            "RNCAndroidDialogPickerComponentDescriptor",
+            "RNCAndroidDropdownPickerComponentDescriptor"
+          ],
+          "cmakeListsPath": "C:/Users/filip/Desktop/Inzynierka-main/MobileApp/node_modules/@react-native-picker/picker/android/src/main/jni/CMakeLists.txt",
+          "cxxModuleCMakeListsModuleName": null,
+          "cxxModuleCMakeListsPath": null,
+          "cxxModuleHeaderName": null,
+          "isPureCxxDependency": false
+        }
+      }
+    },
+    "react-native-config": {
+      "root": "C:\\Users\\filip\\Desktop\\Inzynierka-main\\MobileApp\\node_modules\\react-native-config",
+      "name": "react-native-config",
+      "platforms": {
+        "ios": {
+          "podspecPath": "C:\\Users\\filip\\Desktop\\Inzynierka-main\\MobileApp\\node_modules\\react-native-config\\react-native-config.podspec",
+          "version": "1.6.0",
+          "configurations": [],
+          "scriptPhases": []
+        },
+        "android": {
+          "sourceDir": "C:\\Users\\filip\\Desktop\\Inzynierka-main\\MobileApp\\node_modules\\react-native-config\\android",
+          "packageImportPath": "import com.lugg.RNCConfig.RNCConfigPackage;",
+          "packageInstance": "new RNCConfigPackage()",
+          "buildTypes": [],
+          "libraryName": "RNCConfigSpec",
+          "componentDescriptors": [],
+          "cmakeListsPath": "C:/Users/filip/Desktop/Inzynierka-main/MobileApp/node_modules/react-native-config/android/build/generated/source/codegen/jni/CMakeLists.txt",
+          "cxxModuleCMakeListsModuleName": null,
+          "cxxModuleCMakeListsPath": null,
+          "cxxModuleHeaderName": null,
+          "isPureCxxDependency": false
+        }
+      }
+    },
+    "react-native-image-picker": {
+      "root": "C:\\Users\\filip\\Desktop\\Inzynierka-main\\MobileApp\\node_modules\\react-native-image-picker",
+      "name": "react-native-image-picker",
+      "platforms": {
+        "ios": {
+          "podspecPath": "C:\\Users\\filip\\Desktop\\Inzynierka-main\\MobileApp\\node_modules\\react-native-image-picker\\react-native-image-picker.podspec",
+          "version": "8.2.1",
+          "configurations": [],
+          "scriptPhases": []
+        },
+        "android": {
+          "sourceDir": "C:\\Users\\filip\\Desktop\\Inzynierka-main\\MobileApp\\node_modules\\react-native-image-picker\\android",
+          "packageImportPath": "import com.imagepicker.ImagePickerPackage;",
+          "packageInstance": "new ImagePickerPackage()",
+          "buildTypes": [],
+          "libraryName": "RNImagePickerSpec",
+          "componentDescriptors": [],
+          "cmakeListsPath": "C:/Users/filip/Desktop/Inzynierka-main/MobileApp/node_modules/react-native-image-picker/android/build/generated/source/codegen/jni/CMakeLists.txt",
+          "cxxModuleCMakeListsModuleName": null,
+          "cxxModuleCMakeListsPath": null,
+          "cxxModuleHeaderName": null,
+          "isPureCxxDependency": false
+        }
+      }
+    },
     "react-native-safe-area-context": {
       "root": "C:\\Users\\filip\\Desktop\\Inzynierka-main\\MobileApp\\node_modules\\react-native-safe-area-context",
       "name": "react-native-safe-area-context",

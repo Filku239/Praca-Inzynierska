@@ -39,19 +39,18 @@ export default function App() {
       >
         <Tab.Screen name="Home" component={HomeScreen} options={{ title: 'Strona główna' }} />
         <Tab.Screen name="Vehicles" component={VehiclesScreen} options={{ title: 'Pojazdy' }} />
+        {isLoggedIn && (
+                  <Tab.Screen
+                    name="AddVehicle"
+                    component={AddVehicleScreen}
+                    options={{ title: 'Dodaj pojazd' }}
+                  />
+                )}
         <Tab.Screen
           name="Account"
           component={isLoggedIn ? ProfileScreen : AccountScreen}
           options={{ title: isLoggedIn ? 'Konto' : 'Zaloguj' }}
         />
-        {isLoggedIn && (
-          <Tab.Screen
-            name="AddVehicle"
-            component={AddVehicleScreen}
-            options={{ title: 'Dodaj pojazd' }}
-          />
-        )}
-
 
       </Tab.Navigator>
     </NavigationContainer>
