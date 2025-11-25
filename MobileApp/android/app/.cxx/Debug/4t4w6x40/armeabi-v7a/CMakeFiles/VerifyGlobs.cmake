@@ -37,6 +37,51 @@ if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")
   file(TOUCH_NOCREATE "C:/Users/filip/Desktop/Inzynierka-main/MobileApp/android/app/.cxx/Debug/4t4w6x40/armeabi-v7a/CMakeFiles/cmake.verify_globs")
 endif()
 
+# LIB_CUSTOM_SRCS at C:/Users/filip/Desktop/Inzynierka-main/MobileApp/node_modules/@react-native-community/slider/android/src/main/jni/CMakeLists.txt:12 (file)
+file(GLOB NEW_GLOB LIST_DIRECTORIES true "C:/Users/filip/Desktop/Inzynierka-main/MobileApp/node_modules/@react-native-community/slider/android/src/main/jni/*.cpp")
+set(OLD_GLOB
+  )
+if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")
+  message("-- GLOB mismatch!")
+  file(TOUCH_NOCREATE "C:/Users/filip/Desktop/Inzynierka-main/MobileApp/android/app/.cxx/Debug/4t4w6x40/armeabi-v7a/CMakeFiles/cmake.verify_globs")
+endif()
+
+# LIB_CUSTOM_SRCS at C:/Users/filip/Desktop/Inzynierka-main/MobileApp/node_modules/@react-native-community/slider/android/src/main/jni/CMakeLists.txt:12 (file)
+file(GLOB NEW_GLOB LIST_DIRECTORIES true "C:/Users/filip/Desktop/Inzynierka-main/MobileApp/node_modules/@react-native-community/slider/android/src/main/jni/../../../../common/cpp/react/renderer/components/RNCSlider/*.cpp")
+set(OLD_GLOB
+  "C:/Users/filip/Desktop/Inzynierka-main/MobileApp/node_modules/@react-native-community/slider/android/src/main/jni/../../../../common/cpp/react/renderer/components/RNCSlider/RNCSliderMeasurementsManager.cpp"
+  "C:/Users/filip/Desktop/Inzynierka-main/MobileApp/node_modules/@react-native-community/slider/android/src/main/jni/../../../../common/cpp/react/renderer/components/RNCSlider/RNCSliderShadowNode.cpp"
+  )
+if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")
+  message("-- GLOB mismatch!")
+  file(TOUCH_NOCREATE "C:/Users/filip/Desktop/Inzynierka-main/MobileApp/android/app/.cxx/Debug/4t4w6x40/armeabi-v7a/CMakeFiles/cmake.verify_globs")
+endif()
+
+# LIB_CODEGEN_SRCS at C:/Users/filip/Desktop/Inzynierka-main/MobileApp/node_modules/@react-native-community/slider/android/src/main/jni/CMakeLists.txt:13 (file)
+file(GLOB NEW_GLOB LIST_DIRECTORIES true "C:/Users/filip/Desktop/Inzynierka-main/MobileApp/node_modules/@react-native-community/slider/android/src/main/jni/../../../build/generated/source/codegen/jni/*.cpp")
+set(OLD_GLOB
+  "C:/Users/filip/Desktop/Inzynierka-main/MobileApp/node_modules/@react-native-community/slider/android/src/main/jni/../../../build/generated/source/codegen/jni/RNCSlider-generated.cpp"
+  )
+if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")
+  message("-- GLOB mismatch!")
+  file(TOUCH_NOCREATE "C:/Users/filip/Desktop/Inzynierka-main/MobileApp/android/app/.cxx/Debug/4t4w6x40/armeabi-v7a/CMakeFiles/cmake.verify_globs")
+endif()
+
+# LIB_CODEGEN_SRCS at C:/Users/filip/Desktop/Inzynierka-main/MobileApp/node_modules/@react-native-community/slider/android/src/main/jni/CMakeLists.txt:13 (file)
+file(GLOB NEW_GLOB LIST_DIRECTORIES true "C:/Users/filip/Desktop/Inzynierka-main/MobileApp/node_modules/@react-native-community/slider/android/src/main/jni/../../../build/generated/source/codegen/jni/react/renderer/components/RNCSlider/*.cpp")
+set(OLD_GLOB
+  "C:/Users/filip/Desktop/Inzynierka-main/MobileApp/node_modules/@react-native-community/slider/android/src/main/jni/../../../build/generated/source/codegen/jni/react/renderer/components/RNCSlider/ComponentDescriptors.cpp"
+  "C:/Users/filip/Desktop/Inzynierka-main/MobileApp/node_modules/@react-native-community/slider/android/src/main/jni/../../../build/generated/source/codegen/jni/react/renderer/components/RNCSlider/EventEmitters.cpp"
+  "C:/Users/filip/Desktop/Inzynierka-main/MobileApp/node_modules/@react-native-community/slider/android/src/main/jni/../../../build/generated/source/codegen/jni/react/renderer/components/RNCSlider/Props.cpp"
+  "C:/Users/filip/Desktop/Inzynierka-main/MobileApp/node_modules/@react-native-community/slider/android/src/main/jni/../../../build/generated/source/codegen/jni/react/renderer/components/RNCSlider/RNCSliderJSI-generated.cpp"
+  "C:/Users/filip/Desktop/Inzynierka-main/MobileApp/node_modules/@react-native-community/slider/android/src/main/jni/../../../build/generated/source/codegen/jni/react/renderer/components/RNCSlider/ShadowNodes.cpp"
+  "C:/Users/filip/Desktop/Inzynierka-main/MobileApp/node_modules/@react-native-community/slider/android/src/main/jni/../../../build/generated/source/codegen/jni/react/renderer/components/RNCSlider/States.cpp"
+  )
+if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")
+  message("-- GLOB mismatch!")
+  file(TOUCH_NOCREATE "C:/Users/filip/Desktop/Inzynierka-main/MobileApp/android/app/.cxx/Debug/4t4w6x40/armeabi-v7a/CMakeFiles/cmake.verify_globs")
+endif()
+
 # LIB_CUSTOM_SRCS at C:/Users/filip/Desktop/Inzynierka-main/MobileApp/node_modules/@react-native-picker/picker/android/src/main/jni/CMakeLists.txt:20 (file)
 file(GLOB NEW_GLOB LIST_DIRECTORIES true "C:/Users/filip/Desktop/Inzynierka-main/MobileApp/node_modules/@react-native-picker/picker/android/src/main/jni/*.cpp")
 set(OLD_GLOB

@@ -3,10 +3,13 @@ import { View, Text, StyleSheet, TouchableOpacity, Alert, ScrollView } from 'rea
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 
+const API_BASE_URL = 'http://0.0.0.0:3000';
+
 export default function ProfileScreen() {
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [role, setRole] = useState('');
+  const [userId, setUserId] = useState(null);
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -15,10 +18,12 @@ export default function ProfileScreen() {
         const storedUsername = await AsyncStorage.getItem('username');
         const storedEmail = await AsyncStorage.getItem('email');
         const storedRole = await AsyncStorage.getItem('role');
+        const storedId = await AsyncStorage.getItem('user_id');
 
         setUsername(storedUsername || '');
         setEmail(storedEmail || '');
         setRole(storedRole || '');
+        setUserId(storedId);
       } catch (err) {
         console.error('Error loading user data:', err);
       }
@@ -28,12 +33,80 @@ export default function ProfileScreen() {
 
   const handleLogout = async () => {
     try {
-      await AsyncStorage.multiRemove(['token', 'username', 'email', 'role']);
+      await AsyncStorage.multiRemove(['token', 'username', 'email', 'role', 'id']);
       Alert.alert('Wylogowano', 'Zostałeś wylogowany');
       navigation.navigate('Account');
     } catch (err) {
       console.error('Error during logout:', err);
     }
+  };
+
+  const deleteUserApi = async () => {
+    if (!userId) {
+      Alert.alert('Błąd', 'Brak ID użytkownika. Nie można usunąć konta.');
+      return false;
+    }
+
+    const token = await AsyncStorage.getItem('token');
+    if (!token) {
+        Alert.alert('Błąd', 'Brak tokenu. Wyloguj się i zaloguj ponownie.');
+        return false;
+    }
+
+    try {
+      const response = await fetch(`${API_BASE_URL}/users/${userId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+
+      if (response.status === 200) {
+        return true;
+      } else if (response.status === 403) {
+        Alert.alert('Błąd', 'Brak uprawnień do usunięcia tego konta. Tylko admin lub właściciel konta może to zrobić.');
+      } else if (response.status === 404) {
+        Alert.alert('Błąd', 'Konto nie zostało znalezione na serwerze.');
+      } else {
+        Alert.alert('Błąd serwera', `Nie udało się usunąć konta. Status: ${response.status}`);
+      }
+      return false;
+
+    } catch (error) {
+      console.error('Błąd połączenia z API:', error);
+      Alert.alert('Błąd połączenia', 'Wystąpił problem z połączeniem z serwerem.');
+      return false;
+    }
+  };
+
+  const handleChangePassword = () => {
+    navigation.navigate('ChangePassword');
+  };
+
+  const handleDeleteAccount = () => {
+    Alert.alert(
+      'Potwierdź usunięcie konta',
+      'Czy na pewno chcesz trwale usunąć swoje konto? Tej operacji nie można cofnąć.',
+      [
+        {
+          text: 'Anuluj',
+          style: 'cancel',
+        },
+        {
+          text: 'Usuń',
+          onPress: async () => {
+            const success = await deleteUserApi();
+
+            if (success) {
+              Alert.alert('Konto usunięte', 'Twoje konto zostało trwale usunięte.');
+              handleLogout();
+            }
+          },
+          style: 'destructive',
+        },
+      ],
+      { cancelable: false }
+    );
   };
 
   return (
@@ -60,14 +133,14 @@ export default function ProfileScreen() {
           <Text style={styles.sectionDesc}>Twoje aktywne i poprzednie rezerwacje</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.sectionCard}>
-          <Text style={styles.sectionTitle}>Ustawienia konta</Text>
-          <Text style={styles.sectionDesc}>Zarządzanie profilem użytkownika</Text>
+        <TouchableOpacity style={styles.sectionCard} onPress={handleChangePassword}>
+          <Text style={styles.sectionTitle}>Zmiana hasła</Text>
+          <Text style={styles.sectionDesc}>Zabezpiecz swoje konto nowym hasłem</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.sectionCard}>
-          <Text style={styles.sectionTitle}>Wsparcie i kontakt</Text>
-          <Text style={styles.sectionDesc}>Pomoc i zgłoszenia problemów</Text>
+        <TouchableOpacity style={[styles.sectionCard, styles.deleteAccountCard]} onPress={handleDeleteAccount}>
+          <Text style={[styles.sectionTitle, styles.deleteAccountText]}>Usuń konto</Text>
+          <Text style={[styles.sectionDesc, styles.deleteAccountText]}>Trwałe usunięcie wszystkich Twoich danych</Text>
         </TouchableOpacity>
 
       <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
@@ -146,6 +219,14 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#777',
     marginTop: 4
+  },
+  deleteAccountCard: {
+    borderColor: '#FF3300',
+    borderWidth: 1,
+    backgroundColor: '#fff5f5',
+  },
+  deleteAccountText: {
+    color: '#FF3300',
   },
   logoutButton: {
     backgroundColor: '#FF3300',

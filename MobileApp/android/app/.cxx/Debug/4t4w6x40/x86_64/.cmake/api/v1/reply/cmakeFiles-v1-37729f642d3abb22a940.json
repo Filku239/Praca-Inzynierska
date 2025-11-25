@@ -231,6 +231,10 @@
 		},
 		{
 			"isExternal" : true,
+			"path" : "C:/Users/filip/Desktop/Inzynierka-main/MobileApp/node_modules/@react-native-community/slider/android/src/main/jni/CMakeLists.txt"
+		},
+		{
+			"isExternal" : true,
 			"path" : "C:/Users/filip/Desktop/Inzynierka-main/MobileApp/node_modules/@react-native-picker/picker/android/src/main/jni/CMakeLists.txt"
 		},
 		{

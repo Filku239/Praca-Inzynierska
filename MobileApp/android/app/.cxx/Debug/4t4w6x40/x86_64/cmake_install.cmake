@@ -45,6 +45,7 @@ endif()
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
   include("C:/Users/filip/Desktop/Inzynierka-main/MobileApp/android/app/.cxx/Debug/4t4w6x40/x86_64/rnasyncstorage_autolinked_build/cmake_install.cmake")
+  include("C:/Users/filip/Desktop/Inzynierka-main/MobileApp/android/app/.cxx/Debug/4t4w6x40/x86_64/RNCSlider_autolinked_build/cmake_install.cmake")
   include("C:/Users/filip/Desktop/Inzynierka-main/MobileApp/android/app/.cxx/Debug/4t4w6x40/x86_64/rnpicker_autolinked_build/cmake_install.cmake")
   include("C:/Users/filip/Desktop/Inzynierka-main/MobileApp/android/app/.cxx/Debug/4t4w6x40/x86_64/RNCConfigSpec_autolinked_build/cmake_install.cmake")
   include("C:/Users/filip/Desktop/Inzynierka-main/MobileApp/android/app/.cxx/Debug/4t4w6x40/x86_64/RNImagePickerSpec_autolinked_build/cmake_install.cmake")

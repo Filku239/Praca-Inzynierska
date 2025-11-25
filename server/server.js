@@ -21,25 +21,33 @@ const init = async () => {
     });
 
     server.auth.scheme('jwtAuth', function () {
-      return {
-        authenticate: async function (request, h) {
-          try {
-            const authHeader = request.headers.authorization;
-            if (!authHeader) throw Boom.unauthorized('Missing token');
+  return {
+    authenticate: async function (request, h) {
+      try {
+        const authHeader = request.headers.authorization;
+        if (!authHeader) throw Boom.unauthorized('Missing token');
 
-            const token = authHeader.replace('Bearer ', '');
-            const payload = jwt.verify(token, process.env.JWT_SECRET);
+        const token = authHeader.replace('Bearer ', '');
+        const payload = jwt.verify(token, process.env.JWT_SECRET);
 
-            const user = await User.findById(payload.sub);
-            if (!user) throw Boom.unauthorized('User not found');
+        const user = await User.findById(payload.sub);
+        if (!user) throw Boom.unauthorized('User not found');
 
-            return h.authenticated({ credentials: user });
-          } catch (err) {
-            throw Boom.unauthorized();
-          }
-        }
-      };
-    });
+        const credentials = {
+          id: user._id.toString(),
+          role: user.role,
+          email: user.email,
+          username: user.username
+        };
+
+        return h.authenticated({ credentials });
+      } catch (err) {
+        throw Boom.unauthorized();
+      }
+    }
+  };
+});
+
 
     server.auth.strategy('jwt', 'jwtAuth');
 

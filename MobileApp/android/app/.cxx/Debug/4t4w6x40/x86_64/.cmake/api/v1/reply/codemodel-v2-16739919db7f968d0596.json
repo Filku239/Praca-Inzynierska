@@ -14,7 +14,8 @@
 						4,
 						5,
 						6,
-						7
+						7,
+						8
 					],
 					"jsonFile" : "directory-.-Debug-d0094a50bb2071803777.json",
 					"minimumCMakeVersion" : 
@@ -40,7 +41,22 @@
 					"source" : "C:/Users/filip/Desktop/Inzynierka-main/MobileApp/node_modules/@react-native-async-storage/async-storage/android/build/generated/source/codegen/jni",
 					"targetIndexes" : 
 					[
-						4
+						5
+					]
+				},
+				{
+					"build" : "RNCSlider_autolinked_build",
+					"jsonFile" : "directory-RNCSlider_autolinked_build-Debug-297803f59d69da892b8a.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.13"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "C:/Users/filip/Desktop/Inzynierka-main/MobileApp/node_modules/@react-native-community/slider/android/src/main/jni",
+					"targetIndexes" : 
+					[
+						2
 					]
 				},
 				{
@@ -55,7 +71,7 @@
 					"source" : "C:/Users/filip/Desktop/Inzynierka-main/MobileApp/node_modules/@react-native-picker/picker/android/src/main/jni",
 					"targetIndexes" : 
 					[
-						5
+						6
 					]
 				},
 				{
@@ -85,7 +101,7 @@
 					"source" : "C:/Users/filip/Desktop/Inzynierka-main/MobileApp/node_modules/react-native-image-picker/android/build/generated/source/codegen/jni",
 					"targetIndexes" : 
 					[
-						2
+						3
 					]
 				},
 				{
@@ -100,7 +116,7 @@
 					"source" : "C:/Users/filip/Desktop/Inzynierka-main/MobileApp/node_modules/react-native-safe-area-context/android/src/main/jni",
 					"targetIndexes" : 
 					[
-						7
+						8
 					]
 				},
 				{
@@ -115,7 +131,7 @@
 					"source" : "C:/Users/filip/Desktop/Inzynierka-main/MobileApp/node_modules/react-native-screens/android/src/main/jni",
 					"targetIndexes" : 
 					[
-						6
+						7
 					]
 				},
 				{
@@ -130,7 +146,7 @@
 					"source" : "C:/Users/filip/Desktop/Inzynierka-main/MobileApp/node_modules/react-native-vector-icons/android/build/generated/source/codegen/jni",
 					"targetIndexes" : 
 					[
-						3
+						4
 					]
 				}
 			],
@@ -147,7 +163,8 @@
 						4,
 						5,
 						6,
-						7
+						7,
+						8
 					],
 					"name" : "appmodules",
 					"targetIndexes" : 
@@ -159,7 +176,8 @@
 						4,
 						5,
 						6,
-						7
+						7,
+						8
 					]
 				}
 			],
@@ -168,28 +186,35 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "appmodules::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-appmodules-Debug-b13a172ba1b6c3675645.json",
+					"jsonFile" : "target-appmodules-Debug-4feb2e92d94c735266e4.json",
 					"name" : "appmodules",
 					"projectIndex" : 0
 				},
 				{
-					"directoryIndex" : 3,
+					"directoryIndex" : 4,
 					"id" : "react_codegen_RNCConfigSpec::@89f1b79ed4954e2f2cff",
 					"jsonFile" : "target-react_codegen_RNCConfigSpec-Debug-c8b32bed2a0b3b55110e.json",
 					"name" : "react_codegen_RNCConfigSpec",
 					"projectIndex" : 0
 				},
 				{
-					"directoryIndex" : 4,
+					"directoryIndex" : 2,
+					"id" : "react_codegen_RNCSlider::@4898bc4726ecf1751b6a",
+					"jsonFile" : "target-react_codegen_RNCSlider-Debug-c4492d7af4c4ad995d9a.json",
+					"name" : "react_codegen_RNCSlider",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 5,
 					"id" : "react_codegen_RNImagePickerSpec::@f66ee9a2efecfb28bee4",
-					"jsonFile" : "target-react_codegen_RNImagePickerSpec-Debug-eda33da115c77182e828.json",
+					"jsonFile" : "target-react_codegen_RNImagePickerSpec-Debug-a7d6aebc35f0cfbf170c.json",
 					"name" : "react_codegen_RNImagePickerSpec",
 					"projectIndex" : 0
 				},
 				{
-					"directoryIndex" : 7,
+					"directoryIndex" : 8,
 					"id" : "react_codegen_RNVectorIconsSpec::@479809fae146501fd34d",
-					"jsonFile" : "target-react_codegen_RNVectorIconsSpec-Debug-0b23aa20cc96a433dfed.json",
+					"jsonFile" : "target-react_codegen_RNVectorIconsSpec-Debug-0b076357755c84325754.json",
 					"name" : "react_codegen_RNVectorIconsSpec",
 					"projectIndex" : 0
 				},
@@ -201,23 +226,23 @@
 					"projectIndex" : 0
 				},
 				{
-					"directoryIndex" : 2,
+					"directoryIndex" : 3,
 					"id" : "react_codegen_rnpicker::@e8bb2e9e833f47d0d516",
-					"jsonFile" : "target-react_codegen_rnpicker-Debug-d24acab999a014716b06.json",
+					"jsonFile" : "target-react_codegen_rnpicker-Debug-da29a2e87f90838a2c30.json",
 					"name" : "react_codegen_rnpicker",
 					"projectIndex" : 0
 				},
 				{
-					"directoryIndex" : 6,
+					"directoryIndex" : 7,
 					"id" : "react_codegen_rnscreens::@25bcbd507e98d3a854ad",
-					"jsonFile" : "target-react_codegen_rnscreens-Debug-4131140d4792c05b0feb.json",
+					"jsonFile" : "target-react_codegen_rnscreens-Debug-1b6e1fbc961705aeaabc.json",
 					"name" : "react_codegen_rnscreens",
 					"projectIndex" : 0
 				},
 				{
-					"directoryIndex" : 5,
+					"directoryIndex" : 6,
 					"id" : "react_codegen_safeareacontext::@7984cd80db47aa7b952a",
-					"jsonFile" : "target-react_codegen_safeareacontext-Debug-9d5aa9f59c711c8d0392.json",
+					"jsonFile" : "target-react_codegen_safeareacontext-Debug-3077a16b41e5668986c3.json",
 					"name" : "react_codegen_safeareacontext",
 					"projectIndex" : 0
 				}
@@ -227,7 +252,7 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "C:/Users/filip/Desktop/Inzynierka-main/MobileApp/android/app/.cxx/Debug/4t4w6x40/x86",
+		"build" : "C:/Users/filip/Desktop/Inzynierka-main/MobileApp/android/app/.cxx/Debug/4t4w6x40/x86_64",
 		"source" : "C:/Users/filip/Desktop/Inzynierka-main/MobileApp/node_modules/react-native/ReactAndroid/cmake-utils/default-app-setup"
 	},
 	"version" : 

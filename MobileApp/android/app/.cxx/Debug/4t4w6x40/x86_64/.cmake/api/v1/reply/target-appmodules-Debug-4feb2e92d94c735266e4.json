@@ -23,6 +23,7 @@
 			"C:/Users/filip/Desktop/Inzynierka-main/MobileApp/node_modules/react-native/ReactAndroid/cmake-utils/ReactNative-application.cmake",
 			"CMakeLists.txt",
 			"C:/Users/filip/Desktop/Inzynierka-main/MobileApp/node_modules/react-native/ReactCommon/cmake-utils/react-native-flags.cmake",
+			"C:/Users/filip/Desktop/Inzynierka-main/MobileApp/node_modules/@react-native-community/slider/android/src/main/jni/CMakeLists.txt",
 			"C:/Users/filip/Desktop/Inzynierka-main/MobileApp/node_modules/@react-native-picker/picker/android/src/main/jni/CMakeLists.txt",
 			"C:/Users/filip/Desktop/Inzynierka-main/MobileApp/node_modules/react-native-safe-area-context/android/src/main/jni/CMakeLists.txt",
 			"C:/Users/filip/Desktop/Inzynierka-main/MobileApp/node_modules/react-native-screens/android/src/main/jni/CMakeLists.txt"
@@ -90,7 +91,7 @@
 			{
 				"command" : 6,
 				"file" : 3,
-				"line" : 81,
+				"line" : 89,
 				"parent" : 10
 			},
 			{
@@ -99,7 +100,7 @@
 			{
 				"command" : 6,
 				"file" : 4,
-				"line" : 62,
+				"line" : 81,
 				"parent" : 12
 			},
 			{
@@ -108,8 +109,17 @@
 			{
 				"command" : 6,
 				"file" : 5,
-				"line" : 85,
+				"line" : 62,
 				"parent" : 14
+			},
+			{
+				"file" : 6
+			},
+			{
+				"command" : 6,
+				"file" : 6,
+				"line" : 85,
+				"parent" : 16
 			}
 		]
 	},
@@ -200,14 +210,18 @@
 				},
 				{
 					"backtrace" : 11,
-					"path" : "C:/Users/filip/Desktop/Inzynierka-main/MobileApp/node_modules/@react-native-picker/picker/android/src/main/jni"
+					"path" : "C:/Users/filip/Desktop/Inzynierka-main/MobileApp/node_modules/@react-native-community/slider/android/src/main/jni"
 				},
 				{
 					"backtrace" : 13,
-					"path" : "C:/Users/filip/Desktop/Inzynierka-main/MobileApp/node_modules/react-native-safe-area-context/android/src/main/jni"
+					"path" : "C:/Users/filip/Desktop/Inzynierka-main/MobileApp/node_modules/@react-native-picker/picker/android/src/main/jni"
 				},
 				{
 					"backtrace" : 15,
+					"path" : "C:/Users/filip/Desktop/Inzynierka-main/MobileApp/node_modules/react-native-safe-area-context/android/src/main/jni"
+				},
+				{
+					"backtrace" : 17,
 					"path" : "C:/Users/filip/Desktop/Inzynierka-main/MobileApp/node_modules/react-native-screens/android/src/main/jni"
 				},
 				{
@@ -217,6 +231,22 @@
 				{
 					"backtrace" : 4,
 					"path" : "C:/Users/filip/Desktop/Inzynierka-main/MobileApp/node_modules/@react-native-async-storage/async-storage/android/build/generated/source/codegen/jni/react/renderer/components/rnasyncstorage"
+				},
+				{
+					"backtrace" : 4,
+					"path" : "C:/Users/filip/Desktop/Inzynierka-main/MobileApp/node_modules/@react-native-community/slider/android/src/main/jni/."
+				},
+				{
+					"backtrace" : 4,
+					"path" : "C:/Users/filip/Desktop/Inzynierka-main/MobileApp/node_modules/@react-native-community/slider/android/src/main/jni/../../../../common/cpp"
+				},
+				{
+					"backtrace" : 4,
+					"path" : "C:/Users/filip/Desktop/Inzynierka-main/MobileApp/node_modules/@react-native-community/slider/android/src/main/jni/../../../build/generated/source/codegen/jni"
+				},
+				{
+					"backtrace" : 4,
+					"path" : "C:/Users/filip/Desktop/Inzynierka-main/MobileApp/node_modules/@react-native-community/slider/android/src/main/jni/../../../build/generated/source/codegen/jni/react/renderer/components/RNCSlider"
 				},
 				{
 					"backtrace" : 4,
@@ -322,6 +352,10 @@
 		},
 		{
 			"backtrace" : 4,
+			"id" : "react_codegen_RNCSlider::@4898bc4726ecf1751b6a"
+		},
+		{
+			"backtrace" : 4,
 			"id" : "react_codegen_rnpicker::@e8bb2e9e833f47d0d516"
 		},
 		{
@@ -330,7 +364,11 @@
 		},
 		{
 			"backtrace" : 4,
-			"id" : "react_codegen_RNVectorIconsSpec::@479809fae146501fd34d"
+			"id" : "react_codegen_safeareacontext::@7984cd80db47aa7b952a"
+		},
+		{
+			"backtrace" : 4,
+			"id" : "react_codegen_RNImagePickerSpec::@f66ee9a2efecfb28bee4"
 		},
 		{
 			"backtrace" : 4,
@@ -338,11 +376,7 @@
 		},
 		{
 			"backtrace" : 4,
-			"id" : "react_codegen_safeareacontext::@7984cd80db47aa7b952a"
-		},
-		{
-			"backtrace" : 4,
-			"id" : "react_codegen_RNImagePickerSpec::@f66ee9a2efecfb28bee4"
+			"id" : "react_codegen_RNVectorIconsSpec::@479809fae146501fd34d"
 		}
 	],
 	"id" : "appmodules::@6890427a1f51a3e7e1df",
@@ -353,6 +387,11 @@
 			{
 				"fragment" : "-Wl,-z,max-page-size=16384 -Wl,--build-id=sha1 -Wl,--no-rosegment -Wl,--no-undefined-version -Wl,--fatal-warnings -Wl,--no-undefined -Qunused-arguments",
 				"role" : "flags"
+			},
+			{
+				"backtrace" : 4,
+				"fragment" : "C:\\Users\\filip\\Desktop\\Inzynierka-main\\MobileApp\\android\\app\\build\\intermediates\\cxx\\Debug\\4t4w6x40\\obj\\x86_64\\libreact_codegen_RNCSlider.so",
+				"role" : "libraries"
 			},
 			{
 				"backtrace" : 4,

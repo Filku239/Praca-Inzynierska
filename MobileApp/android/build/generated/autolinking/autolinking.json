@@ -28,6 +28,33 @@
         }
       }
     },
+    "@react-native-community/slider": {
+      "root": "C:\\Users\\filip\\Desktop\\Inzynierka-main\\MobileApp\\node_modules\\@react-native-community\\slider",
+      "name": "@react-native-community/slider",
+      "platforms": {
+        "ios": {
+          "podspecPath": "C:\\Users\\filip\\Desktop\\Inzynierka-main\\MobileApp\\node_modules\\@react-native-community\\slider\\react-native-slider.podspec",
+          "version": "5.1.1",
+          "configurations": [],
+          "scriptPhases": []
+        },
+        "android": {
+          "sourceDir": "C:\\Users\\filip\\Desktop\\Inzynierka-main\\MobileApp\\node_modules\\@react-native-community\\slider\\android",
+          "packageImportPath": "import com.reactnativecommunity.slider.ReactSliderPackage;",
+          "packageInstance": "new ReactSliderPackage()",
+          "buildTypes": [],
+          "libraryName": "RNCSlider",
+          "componentDescriptors": [
+            "RNCSliderComponentDescriptor"
+          ],
+          "cmakeListsPath": "C:/Users/filip/Desktop/Inzynierka-main/MobileApp/node_modules/@react-native-community/slider/android/src/main/jni/CMakeLists.txt",
+          "cxxModuleCMakeListsModuleName": null,
+          "cxxModuleCMakeListsPath": null,
+          "cxxModuleHeaderName": null,
+          "isPureCxxDependency": false
+        }
+      }
+    },
     "@react-native-picker/picker": {
       "root": "C:\\Users\\filip\\Desktop\\Inzynierka-main\\MobileApp\\node_modules\\@react-native-picker\\picker",
       "name": "@react-native-picker/picker",

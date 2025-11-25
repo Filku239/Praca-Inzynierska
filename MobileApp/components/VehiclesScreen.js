@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, FlatList, Dimensions, Image } from 'react-native';
+import { View, Text, StyleSheet, FlatList, Dimensions, Image, TouchableOpacity } from 'react-native';
 import axios from 'axios';
+import { useNavigation } from '@react-navigation/native';
 
 const { width } = Dimensions.get('window');
 const ITEM_WIDTH = (width - 48) / 2;
 
 export default function VehiclesScreen() {
+  const navigation = useNavigation();
   const [vehicles, setVehicles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -30,7 +32,10 @@ export default function VehiclesScreen() {
   if (error) return <Text>{error}</Text>;
 
   const renderVehicle = ({ item }) => (
-    <View style={styles.vehicleItem}>
+    <TouchableOpacity
+      style={styles.vehicleItem}
+      onPress={() => navigation.navigate('SingleVehicle', { vehicleId: item._id })}
+    >
       {item.image ? (
         <Image source={{ uri: item.image }} style={styles.image} />
       ) : (
@@ -55,7 +60,7 @@ export default function VehiclesScreen() {
         <Text style={styles.priceLabel}>CENA / DZIEŃ</Text>
         <Text style={styles.priceValue}>{item.rentalPricePerDay} PLN</Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 
 

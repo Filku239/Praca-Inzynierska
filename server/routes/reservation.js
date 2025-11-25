@@ -3,20 +3,36 @@ const Reservation = require('../models/reservation');
 
 module.exports = [
   {
-    method: 'POST',
-    path: '/reservations',
-    handler: async (request, h) => {
-      const { vehicleId, startDate, endDate } = request.payload;
+  method: 'POST',
+  path: '/reservations',
+  options: {
+    auth: 'jwt'
+  },
+  handler: async (request, h) => {
+    try {
+      const { vehicleId, startDate, endDate, cost } = request.payload;
+
+      if (!vehicleId || !startDate || !endDate || !cost) {
+        return h.response({ message: 'Brak wymaganych danych' }).code(400);
+      }
+
       const reservation = new Reservation({
-        vehicleId,
+        vehicle: vehicleId,             
         startDate,
         endDate,
-        user: request.auth.credentials._id
+        user: request.auth.credentials.id,
+        cost
       });
+
       await reservation.save();
+
       return h.response({ message: 'Reservation created successfully' }).code(201);
+    } catch (err) {
+      console.error('Reservation error:', err);
+      return h.response({ message: 'Internal server error' }).code(500);
     }
-  },
+  }
+},
   {
     method: 'GET',
     path: '/reservations',

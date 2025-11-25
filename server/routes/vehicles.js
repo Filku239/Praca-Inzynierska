@@ -1,4 +1,5 @@
 const Vehicle = require('../models/vehicle');
+const Reservation = require('../models/reservation');
 
 module.exports = [
   {
@@ -42,6 +43,16 @@ module.exports = [
       return vehicle;
     }
   },
+  {
+  method: 'GET',
+  path: '/vehicles/{id}/reservations',
+  handler: async (request, h) => {
+    const vehicleId = request.params.id;
+    const reservations = await Reservation.find({ vehicleId }).select('startDate endDate');
+    return reservations;
+  }
+},
+
   {
     method: 'POST',
     path: '/vehicles/{id}/rental',

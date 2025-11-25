@@ -1,4 +1,5 @@
 C:\Users\filip\Desktop\Inzynierka-main\MobileApp\node_modules\@react-native-async-storage\async-storage\android\build\generated\source\codegen\jni\CMakeLists.txt
+C:\Users\filip\Desktop\Inzynierka-main\MobileApp\node_modules\@react-native-community\slider\android\src\main\jni\CMakeLists.txt
 C:\Users\filip\Desktop\Inzynierka-main\MobileApp\node_modules\@react-native-picker\picker\android\src\main\jni\CMakeLists.txt
 C:\Users\filip\Desktop\Inzynierka-main\MobileApp\node_modules\react-native-config\android\build\generated\source\codegen\jni\CMakeLists.txt
 C:\Users\filip\Desktop\Inzynierka-main\MobileApp\node_modules\react-native-image-picker\android\build\generated\source\codegen\jni\CMakeLists.txt

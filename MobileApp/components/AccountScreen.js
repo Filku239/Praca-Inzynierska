@@ -12,10 +12,40 @@ export default function AccountScreen() {
   const [isLogin, setIsLogin] = useState(true);
   const navigation = useNavigation();
   const [role, setRole] = useState('');
-  const [userId,setId] = useState('');
+  const [userId, setId] = useState('');
+
+  const [passwordValid, setPasswordValid] = useState({
+    length: false,
+    upper: false,
+    number: false,
+    special: false,
+  });
+
+  const validatePassword = (password) => {
+    return {
+      length: password.length >= 8,
+      upper: /[A-Z]/.test(password),
+      number: /[0-9]/.test(password),
+      special: /[^A-Za-z0-9]/.test(password),
+    };
+  };
+
+  const onPasswordChange = (text) => {
+    setPassword(text);
+    setPasswordValid(validatePassword(text));
+  };
 
   const handleAuth = async () => {
     setLoading(true);
+
+    if (!isLogin) {
+      if (!passwordValid.length || !passwordValid.upper || !passwordValid.number || !passwordValid.special) {
+        Alert.alert("Błąd", "Hasło nie spełnia wymagań bezpieczeństwa.");
+        setLoading(false);
+        return;
+      }
+    }
+
     const url = isLogin ? 'http://0.0.0.0:3000/users/login' : 'http://0.0.0.0:3000/users/register';
     const payload = isLogin ? { email, password } : { username, email, password };
 
@@ -34,6 +64,7 @@ export default function AccountScreen() {
         await AsyncStorage.setItem('username', username);
         await AsyncStorage.setItem('email', email);
         await AsyncStorage.setItem('user_id', id);
+
         Alert.alert('Sukces', 'Zalogowano pomyślnie!');
         navigation.navigate('Vehicles');
       } else {
@@ -44,6 +75,12 @@ export default function AccountScreen() {
         setPassword('');
         setRole('');
         setId('');
+        setPasswordValid({
+          length: false,
+          upper: false,
+          number: false,
+          special: false,
+        });
       }
     } catch (err) {
       console.error('Auth error:', err);
@@ -83,12 +120,31 @@ export default function AccountScreen() {
         placeholder="Hasło"
         placeholderTextColor="#999"
         value={password}
-        onChangeText={setPassword}
+        onChangeText={onPasswordChange}
         secureTextEntry
       />
 
+      {!isLogin && (
+        <View style={{ width: '100%', marginBottom: 15 }}>
+          <Text style={passwordValid.length ? styles.valid : styles.invalid}>
+            • Minimum 8 znaków
+          </Text>
+          <Text style={passwordValid.upper ? styles.valid : styles.invalid}>
+            • Co najmniej jedna wielka litera
+          </Text>
+          <Text style={passwordValid.number ? styles.valid : styles.invalid}>
+            • Co najmniej jedna cyfra
+          </Text>
+          <Text style={passwordValid.special ? styles.valid : styles.invalid}>
+            • Co najmniej jeden znak specjalny
+          </Text>
+        </View>
+      )}
+
       <TouchableOpacity style={styles.button} onPress={handleAuth} disabled={loading}>
-        {loading ? <ActivityIndicator color="#fff" /> : <Text style={styles.buttonText}>{isLogin ? 'Zaloguj się' : 'Zarejestruj się'}</Text>}
+        {loading ? <ActivityIndicator color="#fff" /> : <Text style={styles.buttonText}>
+          {isLogin ? 'Zaloguj się' : 'Zarejestruj się'}
+        </Text>}
       </TouchableOpacity>
 
       <TouchableOpacity onPress={() => setIsLogin(!isLogin)}>
@@ -142,5 +198,13 @@ const styles = StyleSheet.create({
     color: '#FF6600',
     fontSize: 14,
     textDecorationLine: 'underline',
+  },
+  valid: {
+    color: 'green',
+    fontSize: 13,
+  },
+  invalid: {
+    color: 'red',
+    fontSize: 13,
   },
 });
