@@ -1,4 +1,4 @@
-const requireOwnReservation = require('../middlewares/reservationCheck');
+const requireOwnReservation = require('../middlewares/reservationCheck.js');
 const Reservation = require('../models/reservation');
 
 module.exports = [
@@ -73,15 +73,25 @@ module.exports = [
     method: 'DELETE',
     path: '/reservations/{id}',
     options: {
+      auth: 'jwt',
       pre:[requireOwnReservation()]
     },    
     handler: async (request, h) => {
       const id = request.params.id;
-      const reservation = await Reservation.findByIdAndRemove(id);
+      const reservation = await Reservation.findByIdAndDelete(id);
       if (!reservation) {
         return h.response({ message: 'Reservation not found' }).code(404);
       }
       return h.response({ message: 'Reservation deleted successfully' }).code(200);
+    }
+  },
+  {
+    method: 'GET',
+    path: '/reservations/user/{id}',
+    handler: async (request, h) => {
+      const id = request.params.id;
+      const reservations = await Reservation.find({ user: id }).populate('vehicle');
+      return reservations;
     }
   }
 ]

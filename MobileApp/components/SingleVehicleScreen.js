@@ -1,11 +1,10 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import {
   View,
   Text,
   StyleSheet,
   ScrollView,
   Image,
-  Dimensions,
   ActivityIndicator,
   TouchableOpacity,
   Alert,
@@ -15,49 +14,26 @@ import { Calendar } from 'react-native-calendars';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
 
+import { API_BASE_URL, COLORS, screenWidth } from './constants/Config';
+import {
+  parseISODate,
+  getDatesBetween,
+  rangeCollidesWithReserved,
+  buildSelectedDatesMap
+} from './utils/DateUtils';
 
-const { width } = Dimensions.get('window');
-const API_BASE_URL = 'http://0.0.0.0:3000';
-const COLORS = {
-  primary: '#28a745',
-  secondary: '#ff6347',
-  textDark: '#333',
-  textLight: '#777',
-  white: '#fff',
-  background: '#f5f5f5',
-  border: '#eee',
-  disabled: '#ccc',
-};
-
-
-const pad = (n) => (n < 10 ? `0${n}` : `${n}`);
-
-const formatDate = (date) => {
-  const y = date.getFullYear();
-  const m = pad(date.getMonth() + 1);
-  const d = pad(date.getDate());
-  return `${y}-${m}-${d}`;
-};
-
-const parseISODate = (isoString) => {
-  const [y, m, d] = isoString.split('-').map(Number);
-  const dt = new Date(Date.UTC(y, m - 1, d));
-  return dt;
-};
-
-const getDatesBetween = (startISO, endISO, color = COLORS.primary, textColor = COLORS.white) => {
-  const dates = {};
-  let current = parseISODate(startISO);
-  const end = parseISODate(endISO);
-
-  while (current <= end) {
-    const ds = formatDate(current);
-    dates[ds] = { color, textColor };
-    current.setUTCDate(current.getUTCDate() + 1);
-  }
-
-  return dates;
-};
+const ColorLegend = () => (
+  <View style={styles.legendContainer}>
+    <View style={styles.legendItem}>
+      <View style={[styles.legendColorBox, { backgroundColor: COLORS.primary }]} />
+      <Text style={styles.legendText}>Wybrany okres</Text>
+    </View>
+    <View style={styles.legendItem}>
+      <View style={[styles.legendColorBox, { backgroundColor: COLORS.secondary }]} />
+      <Text style={styles.legendText}>Zarezerwowane</Text>
+    </View>
+  </View>
+);
 
 
 export default function SingleVehicleScreen({ route, navigation }) {
@@ -75,80 +51,56 @@ export default function SingleVehicleScreen({ route, navigation }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [token, setToken] = useState(null);
 
+  const buildReservedMap = (reserved) => {
+    const rMap = {};
+    reserved.forEach(({ startDate, endDate }) => {
+      const dates = getDatesBetween(startDate, endDate, COLORS.secondary, COLORS.white);
+      const startKey = startDate;
+      const endKey = endDate;
+
+      Object.keys(dates).forEach(d => {
+        rMap[d] = {
+          ...dates[d],
+          disabled: true,
+          disableTouchEvent: true,
+          startingDay: d === startKey,
+          endingDay: d === endKey,
+        };
+      });
+    });
+    return rMap;
+  };
+
   useFocusEffect(
     useCallback(() => {
-      const checkAuthStatus = async () => {
-        const t = await AsyncStorage.getItem('token');
-        setIsLoggedIn(!!t);
-        setToken(t);
+      const fetchData = async () => {
+        try {
+          setLoading(true);
+
+          const t = await AsyncStorage.getItem('token');
+          setIsLoggedIn(!!t);
+          setToken(t);
+
+          const resVehicle = await axios.get(`${API_BASE_URL}/vehicles/${vehicleId}`);
+          setVehicle(resVehicle.data);
+
+          const resReservations = await axios.get(`${API_BASE_URL}/vehicles/${vehicleId}/reservations`);
+          console.log("🟡 SUROWA ODPOWIEDŹ Z SERWERA:", resReservations.data);
+          const reserved = resReservations.data || [];
+
+          setReservedDatesMap(buildReservedMap(reserved));
+
+        } catch (err) {
+          console.error(err);
+          setError("Nie udało się pobrać danych.");
+        } finally {
+          setLoading(false);
+        }
       };
-      checkAuthStatus();
-      return () => {};
-    }, [])
+
+      fetchData();
+    }, [vehicleId])
   );
-
-  useEffect(() => {
-    const fetchVehicle = async () => {
-      try {
-        setLoading(true);
-        const resVehicle = await axios.get(`${API_BASE_URL}/vehicles/${vehicleId}`);
-        const data = resVehicle.data;
-        setVehicle(data);
-
-       const resReservations = await axios.get(`${API_BASE_URL}/vehicles/${vehicleId}/reservations`);
-
-        const reserved = resReservations.data || [];
-        const rMap = {};
-        reserved.forEach(({ startDate, endDate }) => {
-          const dates = getDatesBetween(startDate, endDate, COLORS.secondary, COLORS.white);
-          Object.keys(dates).forEach(d => {
-            rMap[d] = {
-              ...dates[d],
-              disabled: true,
-              disableTouchEvent: true,
-              startingDay: d === startDate,
-              endingDay: d === endDate
-            };
-          });
-        });
-        setReservedDatesMap(rMap);
-
-      } catch (err) {
-        console.error(err);
-        setError('Nie udało się pobrać szczegółów pojazdu lub rezerwacji.');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    if (vehicleId) fetchVehicle();
-    else {
-      setError('Brak ID pojazdu.');
-      setLoading(false);
-    }
-  }, [vehicleId]);
-
-  const rangeCollidesWithReserved = (startISO, endISO) => {
-    let current = parseISODate(startISO);
-    const end = parseISODate(endISO);
-
-    while (current <= end) {
-      const ds = formatDate(current);
-      if (reservedDatesMap[ds]) return true;
-      current.setUTCDate(current.getUTCDate() + 1);
-    }
-    return false;
-  };
-
-  const buildSelectedDatesMap = (startISO, endISO) => {
-    const map = getDatesBetween(startISO, endISO, COLORS.primary, COLORS.white);
-    map[startISO] = { ...map[startISO], startingDay: true };
-    map[endISO] = { ...map[endISO], endingDay: true };
-    if (startISO === endISO) {
-      map[startISO] = { ...map[startISO], startingDay: true, endingDay: true };
-    }
-    return map;
-  };
 
   const handleDayPress = (day) => {
     const dayString = day.dateString;
@@ -174,7 +126,7 @@ export default function SingleVehicleScreen({ route, navigation }) {
       return;
     }
 
-    if (parseISODate(dayString) < parseISODate(startDateWaiting)) {
+    if (parseISODate(dayString).getTime() < parseISODate(startDateWaiting).getTime()) {
       setStartDateWaiting(dayString);
       setSelectedRange(null);
       const singleMap = {
@@ -184,7 +136,7 @@ export default function SingleVehicleScreen({ route, navigation }) {
       return;
     }
 
-    const collides = rangeCollidesWithReserved(startDateWaiting, dayString);
+    const collides = rangeCollidesWithReserved(startDateWaiting, dayString, reservedDatesMap);
     if (collides) {
       Alert.alert('Błąd', 'Wybrany okres zachodzi na zarezerwowane dni.');
       const singleMap = {
@@ -195,7 +147,7 @@ export default function SingleVehicleScreen({ route, navigation }) {
       return;
     }
 
-    const finalMap = buildSelectedDatesMap(startDateWaiting, dayString);
+    const finalMap = buildSelectedDatesMap(startDateWaiting, dayString, COLORS);
     setSelectedDatesMap(finalMap);
     setSelectedRange({ start: startDateWaiting, end: dayString });
     setStartDateWaiting(null);
@@ -221,19 +173,19 @@ export default function SingleVehicleScreen({ route, navigation }) {
 
     try {
       setLoading(true);
-       const start = parseISODate(selectedRange.start);
-          const end = parseISODate(selectedRange.end);
-          const timeDiff = end.getTime() - start.getTime();
-          const days = Math.ceil(timeDiff / (1000 * 60 * 60 * 24)) + 1;
-          const cost = days * vehicle.rentalPricePerDay;
+      const start = parseISODate(selectedRange.start);
+      const end = parseISODate(selectedRange.end);
+      const timeDiff = end.getTime() - start.getTime();
+      const days = Math.ceil(timeDiff / (1000 * 60 * 60 * 24)) + 1;
+      const cost = days * vehicle.rentalPricePerDay;
 
-          const payload = {
-            vehicleId,
-            startDate: selectedRange.start,
-            endDate: selectedRange.end,
-            user,
-            cost
-          };
+      const payload = {
+        vehicleId,
+        startDate: selectedRange.start,
+        endDate: selectedRange.end,
+        user,
+        cost
+      };
 
       await axios.post(`${API_BASE_URL}/reservations`, payload, {
         headers: { Authorization: `Bearer ${token}` },
@@ -241,26 +193,38 @@ export default function SingleVehicleScreen({ route, navigation }) {
 
       const newReservedMap = { ...reservedDatesMap };
       const added = getDatesBetween(payload.startDate, payload.endDate, COLORS.secondary, COLORS.white);
+      const startKey = payload.startDate;
+      const endKey = payload.endDate;
+
       Object.keys(added).forEach((d) => {
         newReservedMap[d] = {
           color: COLORS.secondary,
           textColor: COLORS.white,
           disabled: true,
           disableTouchEvent: true,
+          startingDay: d === startKey,
+          endingDay: d === endKey,
         };
       });
-      newReservedMap[payload.startDate] = { ...newReservedMap[payload.startDate], startingDay: true };
-      newReservedMap[payload.endDate] = { ...newReservedMap[payload.endDate], endingDay: true };
 
       setReservedDatesMap(newReservedMap);
       setSelectedRange(null);
       setSelectedDatesMap({});
       Alert.alert('Sukces', 'Rezerwacja została utworzona.');
     } catch (err) {
-      console.error(err);
-      Alert.alert('Błąd', 'Nie udało się utworzyć rezerwacji.');
-    } finally {
       setLoading(false);
+      console.error("Błąd rezerwacji:", err.response ? err.response.data : err.message);
+
+      if (err.response && err.response.status === 401) {
+        await AsyncStorage.removeItem('token');
+        await AsyncStorage.removeItem('user_id');
+        setIsLoggedIn(false);
+        setToken(null);
+        Alert.alert('Wygasła sesja', 'Sesja wygasła lub dane logowania są niepoprawne. Zaloguj się ponownie.');
+        navigation.navigate('Account');
+      } else {
+        Alert.alert('Błąd', 'Nie udało się utworzyć rezerwacji.');
+      }
     }
   };
 
@@ -376,6 +340,8 @@ export default function SingleVehicleScreen({ route, navigation }) {
           />
         </View>
 
+        <ColorLegend />
+
         <View style={styles.dateRangeTextContainer}>
           <Text>
             Wybrany okres:{' '}
@@ -413,9 +379,9 @@ export default function SingleVehicleScreen({ route, navigation }) {
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: COLORS.background },
   centerContainer: { flex: 1, justifyContent: 'center', alignItems: 'center' },
-  mainImage: { width: width, height: width * 0.6, backgroundColor: COLORS.border },
+  mainImage: { width: screenWidth, height: screenWidth * 0.6, backgroundColor: COLORS.border },
   imagePlaceholder: { justifyContent: 'center', alignItems: 'center' },
-  placeholderText: { color: COLORS.placeholder, fontSize: 18 },
+  placeholderText: { color: COLORS.textLight, fontSize: 18 },
   content: { padding: 16 },
 
   makeModel: { fontSize: 24, fontWeight: '800', color: COLORS.textDark, marginBottom: 4 },
@@ -441,7 +407,7 @@ const styles = StyleSheet.create({
     marginTop: 15,
     marginBottom: 10,
   },
-  description: { fontSize: 14, color: COLORS.textMedium, lineHeight: 22, marginBottom: 10 },
+  description: { fontSize: 14, color: COLORS.textLight, lineHeight: 22, marginBottom: 10 },
 
   specsList: {
     backgroundColor: COLORS.white,
@@ -466,7 +432,7 @@ const styles = StyleSheet.create({
   },
   specValue: {
     fontSize: 14,
-    color: COLORS.textMedium,
+    color: COLORS.textLight,
   },
 
   calendarContainer: {
@@ -495,4 +461,27 @@ const styles = StyleSheet.create({
   },
   reserveButtonText: { color: COLORS.white, fontSize: 18, fontWeight: '700' },
   disabledButton: { backgroundColor: COLORS.disabled, elevation: 0, shadowOpacity: 0 },
+
+  legendContainer: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    marginBottom: 15,
+    marginTop: 5,
+    paddingHorizontal: 5,
+  },
+  legendItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginRight: 20,
+  },
+  legendColorBox: {
+    width: 14,
+    height: 14,
+    borderRadius: 7,
+    marginRight: 6,
+  },
+  legendText: {
+    fontSize: 13,
+    color: COLORS.textDark,
+  },
 });

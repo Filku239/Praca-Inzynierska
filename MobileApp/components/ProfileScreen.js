@@ -128,7 +128,7 @@ export default function ProfileScreen() {
           <Text style={styles.sectionDesc}>Twoje ostatnie sprawdzenia pojazdów</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.sectionCard}>
+        <TouchableOpacity style={styles.sectionCard} onPress={() => navigation.navigate('RecentReservations')}>
           <Text style={styles.sectionTitle}>Rezerwacje</Text>
           <Text style={styles.sectionDesc}>Twoje aktywne i poprzednie rezerwacje</Text>
         </TouchableOpacity>

@@ -12,6 +12,8 @@ import ProfileScreen from './components/ProfileScreen';
 import AddVehicleScreen from './components/AddVehicleScreen';
 import ChangePasswordScreen from './components/ChangePasswordScreen';
 import SingleVehicleScreen from './components/SingleVehicleScreen';
+import RecentReservationsScreen from './components/RecentReservationsScreen';
+
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -29,6 +31,11 @@ function AccountStack() {
         component={ChangePasswordScreen}
         options={{ title: 'Zmiana hasła' }}
       />
+       <Stack.Screen
+              name="RecentReservations"
+              component={RecentReservationsScreen}
+              options={{ title: 'Moje rezerwacje' }}
+            />
     </Stack.Navigator>
   );
 }

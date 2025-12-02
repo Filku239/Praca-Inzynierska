@@ -8,10 +8,9 @@ async function checkOwnReservation(request, h) {
   const reservation = await Reservation.findById(id);
   if (!reservation) throw Boom.notFound('Reservation not found');
 
-  if (reservation.user.toString() !== request.auth.credentials._id.toString()) {
+  if (!reservation.user.equals(request.auth.credentials.id)) {
     throw Boom.forbidden('Access denied');
   }
-
   return h.continue;
 }
 

@@ -1,7 +1,9 @@
 const Vehicle = require('../models/vehicle');
 const Reservation = require('../models/reservation');
+const pad = (n) => (n < 10 ? `0${n}` : `${n}`);
 
 module.exports = [
+  
   {
     method: 'GET',
     path: '/vehicles',
@@ -46,12 +48,30 @@ module.exports = [
   {
   method: 'GET',
   path: '/vehicles/{id}/reservations',
+
   handler: async (request, h) => {
     const vehicleId = request.params.id;
-    const reservations = await Reservation.find({ vehicleId }).select('startDate endDate');
-    return reservations;
-  }
+    const reservations = await Reservation.find({ vehicle: vehicleId })
+      .select('startDate endDate')
+      .lean();
+
+    const clean = reservations.map(r => {
+        const start = r.startDate;
+        const end = r.endDate;
+
+        const startISO = `${start.getUTCFullYear()}-${pad(start.getUTCMonth() + 1)}-${pad(start.getUTCDate())}`;
+        const endISO = `${end.getUTCFullYear()}-${pad(end.getUTCMonth() + 1)}-${pad(end.getUTCDate())}`;
+        
+        return {
+            startDate: startISO,
+            endDate: endISO,
+        };
+    });
+
+    return clean;
+}
 },
+
 
   {
     method: 'POST',
