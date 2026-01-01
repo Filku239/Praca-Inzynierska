@@ -1,0 +1,78 @@
+.admin-navbar {
+    background: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%); 
+    color: white;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    font-family: Arial, sans-serif;
+}
+
+.logo-text {
+    font-size: 1.3em;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.nav-links a {
+    color: #d1c4e9;
+    text-decoration: none;
+    margin-left: 20px;
+    padding: 5px 0;
+    transition: color 0.2s, border-bottom 0.2s;
+}
+
+.nav-links a:hover, .nav-links a.active {
+    color: #ffffff; 
+    border-bottom: 2px solid #ffc107;
+}
+
+.user-info-section {
+    display: flex;
+    align-items: center;
+    gap: 15px; 
+}
+
+.user-detail {
+    margin-right: 15px;
+    font-size: 0.9em;
+}
+
+.user-login {
+    color: #ffc107;
+    font-weight: bold;
+}
+
+.user-role {
+    font-style: italic;
+    color: #e0e0e0;
+}
+
+.btn-logout {
+    display: inline-block;
+    padding: 8px 15px; 
+    font-size: 0.9em;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: center;
+    border: none;
+    border-radius: 10px; 
+    transition: all 0.3s ease-in-out;
+    color: #fff; 
+    
+    background: linear-gradient(135deg, #4b0cb0, #1352c3);
+    
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); 
+}
+
+.btn-logout:hover {
+    background: linear-gradient(135deg, #5c20d0, #1961dc);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+}
+
+.btn-logout:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+}

@@ -102,6 +102,7 @@ export default function AddVehicleScreen() {
       Alert.alert('Błąd', 'Uzupełnij wymagane pola.');
       return;
     }
+    const token = await AsyncStorage.getItem('token');
 
     setLoading(true);
     try {
@@ -117,7 +118,11 @@ export default function AddVehicleScreen() {
       };
       console.log('Sending payload to server:', payload);
 
-      await axios.post('http://0.0.0.0:3000/vehicles', payload);
+      await axios.post('http://0.0.0.0:3000/vehicles', payload, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
 
       Alert.alert('Sukces', 'Pojazd dodany!');
       setForm({

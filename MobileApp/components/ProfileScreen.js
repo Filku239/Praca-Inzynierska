@@ -3,8 +3,6 @@ import { View, Text, StyleSheet, TouchableOpacity, Alert, ScrollView } from 'rea
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 
-const API_BASE_URL = 'http://0.0.0.0:3000';
-
 export default function ProfileScreen() {
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
@@ -41,44 +39,6 @@ export default function ProfileScreen() {
     }
   };
 
-  const deleteUserApi = async () => {
-    if (!userId) {
-      Alert.alert('Błąd', 'Brak ID użytkownika. Nie można usunąć konta.');
-      return false;
-    }
-
-    const token = await AsyncStorage.getItem('token');
-    if (!token) {
-        Alert.alert('Błąd', 'Brak tokenu. Wyloguj się i zaloguj ponownie.');
-        return false;
-    }
-
-    try {
-      const response = await fetch(`${API_BASE_URL}/users/${userId}`, {
-        method: 'DELETE',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
-      });
-
-      if (response.status === 200) {
-        return true;
-      } else if (response.status === 403) {
-        Alert.alert('Błąd', 'Brak uprawnień do usunięcia tego konta. Tylko admin lub właściciel konta może to zrobić.');
-      } else if (response.status === 404) {
-        Alert.alert('Błąd', 'Konto nie zostało znalezione na serwerze.');
-      } else {
-        Alert.alert('Błąd serwera', `Nie udało się usunąć konta. Status: ${response.status}`);
-      }
-      return false;
-
-    } catch (error) {
-      console.error('Błąd połączenia z API:', error);
-      Alert.alert('Błąd połączenia', 'Wystąpił problem z połączeniem z serwerem.');
-      return false;
-    }
-  };
-
   const handleChangePassword = () => {
     navigation.navigate('ChangePassword');
   };
@@ -88,18 +48,29 @@ export default function ProfileScreen() {
       'Potwierdź usunięcie konta',
       'Czy na pewno chcesz trwale usunąć swoje konto? Tej operacji nie można cofnąć.',
       [
-        {
-          text: 'Anuluj',
-          style: 'cancel',
-        },
+        { text: 'Anuluj', style: 'cancel' },
         {
           text: 'Usuń',
           onPress: async () => {
-            const success = await deleteUserApi();
-
-            if (success) {
-              Alert.alert('Konto usunięte', 'Twoje konto zostało trwale usunięte.');
-              handleLogout();
+            const token = await AsyncStorage.getItem('token');
+            if (!userId || !token) {
+              Alert.alert('Błąd', 'Nie można usunąć konta. Zaloguj się ponownie.');
+              return;
+            }
+            try {
+              const response = await fetch(`http://0.0.0.0:3000/users/${userId}`, {
+                method: 'DELETE',
+                headers: { Authorization: `Bearer ${token}` },
+              });
+              if (response.status === 200) {
+                Alert.alert('Konto usunięte', 'Twoje konto zostało trwale usunięte.');
+                handleLogout();
+              } else {
+                Alert.alert('Błąd', 'Nie udało się usunąć konta.');
+              }
+            } catch (err) {
+              console.error('Błąd połączenia z API:', err);
+              Alert.alert('Błąd', 'Wystąpił problem z serwerem.');
             }
           },
           style: 'destructive',
@@ -123,25 +94,25 @@ export default function ProfileScreen() {
         <Text style={styles.email}>{email || 'Twój email'}</Text>
       </View>
 
-      <TouchableOpacity style={styles.sectionCard}>
-          <Text style={styles.sectionTitle}>Historia</Text>
-          <Text style={styles.sectionDesc}>Twoje ostatnie sprawdzenia pojazdów</Text>
-        </TouchableOpacity>
+      <TouchableOpacity style={styles.sectionCard} onPress={() => navigation.navigate('History')}>
+        <Text style={styles.sectionTitle}>Historia i rezerwacje</Text>
+        <Text style={styles.sectionDesc}>Twoje ostatnie sprawdzenia pojazdów</Text>
+      </TouchableOpacity>
 
-        <TouchableOpacity style={styles.sectionCard} onPress={() => navigation.navigate('RecentReservations')}>
-          <Text style={styles.sectionTitle}>Rezerwacje</Text>
-          <Text style={styles.sectionDesc}>Twoje aktywne i poprzednie rezerwacje</Text>
-        </TouchableOpacity>
+      <TouchableOpacity style={styles.sectionCard} onPress={() => navigation.navigate('MyVehicles')}>
+        <Text style={styles.sectionTitle}>Moje Pojazdy</Text>
+        <Text style={styles.sectionDesc}>Pojazdy dodane przez Ciebie</Text>
+      </TouchableOpacity>
 
-        <TouchableOpacity style={styles.sectionCard} onPress={handleChangePassword}>
-          <Text style={styles.sectionTitle}>Zmiana hasła</Text>
-          <Text style={styles.sectionDesc}>Zabezpiecz swoje konto nowym hasłem</Text>
-        </TouchableOpacity>
+      <TouchableOpacity style={styles.sectionCard} onPress={handleChangePassword}>
+        <Text style={styles.sectionTitle}>Zmiana hasła</Text>
+        <Text style={styles.sectionDesc}>Zabezpiecz swoje konto nowym hasłem</Text>
+      </TouchableOpacity>
 
-        <TouchableOpacity style={[styles.sectionCard, styles.deleteAccountCard]} onPress={handleDeleteAccount}>
-          <Text style={[styles.sectionTitle, styles.deleteAccountText]}>Usuń konto</Text>
-          <Text style={[styles.sectionDesc, styles.deleteAccountText]}>Trwałe usunięcie wszystkich Twoich danych</Text>
-        </TouchableOpacity>
+      <TouchableOpacity style={[styles.sectionCard, styles.deleteAccountCard]} onPress={handleDeleteAccount}>
+        <Text style={[styles.sectionTitle, styles.deleteAccountText]}>Usuń konto</Text>
+        <Text style={[styles.sectionDesc, styles.deleteAccountText]}>Trwałe usunięcie wszystkich Twoich danych</Text>
+      </TouchableOpacity>
 
       <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
         <Text style={styles.logoutText}>Wyloguj się</Text>
@@ -223,10 +194,10 @@ const styles = StyleSheet.create({
   deleteAccountCard: {
     borderColor: '#FF3300',
     borderWidth: 1,
-    backgroundColor: '#fff5f5',
+    backgroundColor: '#fff5f5'
   },
   deleteAccountText: {
-    color: '#FF3300',
+    color: '#FF3300'
   },
   logoutButton: {
     backgroundColor: '#FF3300',
@@ -246,3 +217,4 @@ const styles = StyleSheet.create({
     fontWeight: '700'
   }
 });
+

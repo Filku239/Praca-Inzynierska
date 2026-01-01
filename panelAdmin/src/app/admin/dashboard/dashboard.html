@@ -1,0 +1,57 @@
+<app-admin-navbar></app-admin-navbar>
+
+<div class="dashboard-container">
+  <h2>Panel Administratora ⚙️</h2>
+  
+  <p class="subtitle">Szybki przegląd stanu systemu wynajmu pojazdów.</p>
+
+  <div *ngIf="isLoading" class="loading-state">
+    <p>Ładowanie statystyk...</p>
+    <div class="spinner"></div>
+  </div>
+
+  <div *ngIf="!isLoading" class="stats-grid">
+    
+    <div class="stats-card vehicle-card" (click)="goToView('vehicles')">
+      <div class="card-header">
+        <h3>Pojazdy w Bazie 🚗</h3>
+      </div>
+      <div class="card-content">
+        <p class="stat-value">{{ stats.vehicles }}</p>
+      </div>
+      <div class="card-actions">
+        <button class="btn btn-primary">
+          Zarządzaj Pojazdami
+        </button>
+      </div>
+    </div>
+
+    <div class="stats-card user-card" (click)="goToView('users')">
+      <div class="card-header">
+        <h3>Zarejestrowani Użytkownicy 🧑‍💻</h3>
+      </div>
+      <div class="card-content">
+        <p class="stat-value">{{ stats.users }}</p>
+      </div>
+      <div class="card-actions">
+        <button class="btn btn-primary">
+          Zarządzaj Użytkownikami
+        </button>
+      </div>
+    </div>
+
+    <div class="stats-card reservation-card" (click)="goToView('reservations')">
+      <div class="card-header">
+        <h3>Aktywne Rezerwacje 🗓️</h3>
+      </div>
+      <div class="card-content">
+        <p class="stat-value">{{ stats.reservations }}</p>
+      </div>
+      <div class="card-actions">
+        <button class="btn btn-primary">
+          Zarządzaj Rezerwacjami
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

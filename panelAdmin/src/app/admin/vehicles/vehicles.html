@@ -1,0 +1,64 @@
+<app-admin-navbar></app-admin-navbar>
+<div class="vehicles-page">
+  <h1>Lista pojazdów</h1>
+
+  <div class="filters">
+    <input type="text" placeholder="Szukaj pojazdu..." [(ngModel)]="searchTerm" (ngModelChange)="onSearchChange($event)" />
+    <select [(ngModel)]="filterStatus" (change)="onFilterChange(filterStatus)">
+      <option value="all">Wszystkie</option>
+      <option value="accepted">Akceptowane</option>
+      <option value="notAccepted">Nieakceptowane</option>
+    </select>
+  </div>
+
+  <p *ngIf="loading">Ładowanie pojazdów...</p>
+  <p *ngIf="error">{{ error }}</p>
+
+  <table *ngIf="!loading && filteredVehicles.length > 0" border="1" width="100%">
+    <thead>
+      <tr>
+        <th>Marka</th>
+        <th>Model</th>
+        <th>Typ</th>
+        <th>Dostępność</th>
+        <th>Akceptowany</th>
+        <th>Akcje</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let vehicle of filteredVehicles">
+        <td>{{ vehicle.make }}</td>
+        <td>{{ vehicle.model }}</td>
+        <td>{{ vehicle.type }}</td>
+        <td>{{ vehicle.available ? 'Tak' : 'Nie' }}</td>
+        <td>{{ vehicle.accepted ? 'Tak' : 'Nie' }}</td>
+        <td>
+          <button (click)="acceptVehicle(vehicle)" [disabled]="vehicle.accepted">Akceptuj</button>
+          <button (click)="startEdit(vehicle)">Edytuj</button>
+          <button (click)="deleteVehicle(vehicle)">Usuń</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p *ngIf="!loading && filteredVehicles.length === 0">Brak pojazdów</p>
+
+  <div class="modal" *ngIf="editingVehicle">
+    <div class="modal-content">
+      <h2>Edytuj pojazd</h2>
+      <label>Make: <input [(ngModel)]="editingVehicle.make" /></label>
+      <label>Model: <input [(ngModel)]="editingVehicle.model" /></label>
+      <label>Typ: <input [(ngModel)]="editingVehicle.type" /></label>
+      <label>Kolor: <input [(ngModel)]="editingVehicle['color']" /></label>
+      <label>Rok: <input type="number" [(ngModel)]="editingVehicle['year']" /></label>
+      <label>Przebieg: <input type="number" [(ngModel)]="editingVehicle['mileage']" /></label>
+      <label>Cena/dzień: <input type="number" [(ngModel)]="editingVehicle['rentalPricePerDay']" /></label>
+      <label>Lokalizacja: <input [(ngModel)]="editingVehicle['location']" /></label>
+
+      <div class="modal-actions">
+        <button (click)="saveEdit()">Zapisz</button>
+        <button (click)="cancelEdit()">Anuluj</button>
+      </div>
+    </div>
+  </div>
+</div>

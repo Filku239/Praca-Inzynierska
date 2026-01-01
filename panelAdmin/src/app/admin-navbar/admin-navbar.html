@@ -1,0 +1,24 @@
+<nav class="admin-navbar">
+    <div class="nav-title">
+        <span class="logo-text">System Wynajmu Pojazdów</span>
+    </div>
+
+    <div class="nav-links">
+        <a routerLink="/admin" routerLinkActive="unactive" class="nav-link">Dashboard</a>
+        <a routerLink="/admin/vehicles" routerLinkActive="active" class="nav-link">Pojazdy</a>
+        <a routerLink="/admin/users" routerLinkActive="active" class="nav-link">Użytkownicy</a>
+        <a routerLink="/admin/reservations" routerLinkActive="active" class="nav-link">Rezerwacje</a>
+    </div>
+
+    <div *ngIf="userInfo" class="user-info-section">
+        <span class="user-detail">
+            Witaj, 
+            <strong class="user-login">{{ userInfo.username }}</strong> 
+            <span class="user-role">({{ userInfo.role }})</span>
+        </span>
+        
+        <button class="btn btn-logout" (click)="onLogout()">
+            Wyloguj 
+        </button>
+    </div>
+</nav>

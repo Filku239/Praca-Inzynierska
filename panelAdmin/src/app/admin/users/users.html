@@ -1,0 +1,58 @@
+<app-admin-navbar></app-admin-navbar>
+
+<div class="users-page">
+  <h1>Lista użytkowników</h1>
+
+  <p *ngIf="loading">Ładowanie użytkowników...</p>
+  <p *ngIf="error">{{ error }}</p>
+
+  <table *ngIf="!loading && users.length > 0">
+    <thead>
+      <tr>
+        <th>Login</th>
+        <th>Email</th>
+        <th>Rola</th>
+        <th>Akcje</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let u of users">
+        <td>{{ u.username }}</td>
+        <td>{{ u.email }}</td>
+        <td>
+          <select [(ngModel)]="u.role" (change)="changeRole(u._id, u.role)">
+            <option value="user">Użytkownik</option>
+            <option value="admin">Administrator</option>
+          </select>
+        </td>
+        <td>
+          <button (click)="editUser(u)">Edytuj</button>
+          <button (click)="deleteUser(u._id)">Usuń</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p *ngIf="!loading && users.length === 0">Brak użytkowników</p>
+
+  <!-- Modal -->
+  <div class="modal" *ngIf="editingUser">
+    <div class="modal-content">
+      <h2>Edytuj użytkownika</h2>
+
+      <label>Login: <input [(ngModel)]="editingUser.username" /></label>
+      <label>Email: <input [(ngModel)]="editingUser.email" /></label>
+      <label>Rola: 
+        <select [(ngModel)]="editingUser.role">
+          <option value="user">Użytkownik</option>
+          <option value="admin">Administrator</option>
+        </select>
+      </label>
+
+      <div class="modal-actions">
+        <button (click)="saveUser()">Zapisz</button>
+        <button (click)="cancelEdit()">Anuluj</button>
+      </div>
+    </div>
+  </div>
+</div>

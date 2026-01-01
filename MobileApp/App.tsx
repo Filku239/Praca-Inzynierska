@@ -12,8 +12,9 @@ import ProfileScreen from './components/ProfileScreen';
 import AddVehicleScreen from './components/AddVehicleScreen';
 import ChangePasswordScreen from './components/ChangePasswordScreen';
 import SingleVehicleScreen from './components/SingleVehicleScreen';
-import RecentReservationsScreen from './components/RecentReservationsScreen';
-
+import MyVehiclesScreen from './components/MyVehiclesScreen';
+import HistoryScreen from './components/HistoryScreen';
+import EditVehicleScreen from './components/EditVehicleScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -32,10 +33,38 @@ function AccountStack() {
         options={{ title: 'Zmiana hasła' }}
       />
        <Stack.Screen
-              name="RecentReservations"
-              component={RecentReservationsScreen}
-              options={{ title: 'Moje rezerwacje' }}
-            />
+             name="History"
+             component={HistoryScreen}
+             options={{title: 'Historia'}}
+             />
+       <Stack.Screen
+               name="MyVehicles"
+               component={MyVehiclesScreen}
+               options={{title: 'Moje pojazdy'}}
+               />
+       <Stack.Screen
+               name="EditVehicle"
+               component={EditVehicleScreen}
+               options={{title: 'Edytuj pojazd'}}
+               />
+
+    </Stack.Navigator>
+  );
+}
+
+function HomeStack() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="HomeMain"
+        component={HomeScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="SingleVehicle"
+        component={SingleVehicleScreen}
+        options={{ title: 'Szczegóły Pojazdu' }}
+      />
     </Stack.Navigator>
   );
 }
@@ -53,6 +82,7 @@ function VehiclesStack() {
         component={SingleVehicleScreen}
         options={{ title: 'Szczegóły Pojazdu' }}
       />
+
     </Stack.Navigator>
   );
 }
@@ -89,7 +119,7 @@ export default function App() {
       >
         <Tab.Screen
           name="Home"
-          component={HomeScreen}
+          component={HomeStack}
           options={{ title: 'Strona główna' }}
         />
 
