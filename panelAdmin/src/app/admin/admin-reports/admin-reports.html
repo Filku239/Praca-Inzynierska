@@ -1,0 +1,19 @@
+<div class="reportPanel">
+  <div class="reportPanelHeader">
+    <h3>Raporty 📊</h3>
+  </div>
+
+  <div class="reportPanelContent">
+    <p>Generuj raporty systemowe</p>
+  </div>
+
+  <div class="reportPanelActions">
+    <button class="reportPanelButton reportPanelButtonPrimary" (click)="generateReport('pdf')">
+      Generuj PDF
+    </button>
+
+    <button class="reportPanelButton reportPanelButtonSecondary" (click)="generateReport('csv')">
+      Generuj CSV
+    </button>
+  </div>
+</div>

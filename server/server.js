@@ -34,7 +34,6 @@ const init = async () => {
       }
     });
 
-    // Rejestracja Swaggera
     await server.register([
       Inert,
       Vision,
@@ -50,7 +49,6 @@ const init = async () => {
       }
     ]);
 
-    // Schemat autoryzacji JWT
     server.auth.scheme('jwtAuth', function () {
       return {
         authenticate: async function (request, h) {
@@ -81,7 +79,6 @@ const init = async () => {
 
     server.auth.strategy('jwt', 'jwtAuth');
 
-    // Rejestracja tras
     server.route(vehiclesRoutes);
     server.route(usersRoutes);
     server.route(reservationsRoutes);

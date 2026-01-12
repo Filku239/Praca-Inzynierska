@@ -1,6 +1,7 @@
 const Vehicle = require('../models/vehicle');
 const Reservation = require('../models/reservation');
 const User = require('../models/user');
+const vehicle = require('../models/vehicle');
 
 const isAdmin = async (request) => {
     const userId = request.auth.credentials.id;
@@ -143,8 +144,93 @@ const adminRoutes = [{
             return {
                 message: 'Zaktualizowano użytkownika'
             };
-        }
+        },
+        
+    },
+   {
+  method: 'GET',
+  path: '/admin/reports/top-users',
+  options: {
+    auth: 'jwt',
+    tags: ['api', 'admin', 'reports'],
+    description: 'Najaktywniejsi użytkownicy',
+    notes: 'Zwraca listę użytkowników posortowaną po liczbie wszystkich działań (rezerwacje + pojazdy)'
+  },
+  handler: async (request, h) => {
+    if (!await isAdmin(request)) return h.response({ message: 'Brak dostępu' }).code(403);
+
+    const topUsers = await User.aggregate([
+  {
+    $lookup: {
+      from: 'activities',
+      localField: '_id',
+      foreignField: 'user',
+      as: 'activities'
     }
+  },
+  {
+    $addFields: {
+      totalActivity: { $size: '$activities' }
+    }
+  },
+  {
+    $project: {
+      _id: 0,
+      username: 1,
+      email: 1,
+      totalActivity: 1
+    }
+  },
+  { $sort: { totalActivity: -1 } },
+  { $limit: 10 }
+]);
+
+return topUsers;
+
+  }
+},
+{
+  method: 'GET',
+  path: '/admin/reports/top-vehicles',
+  options: {
+    auth: 'jwt',
+    tags: ['api', 'admin', 'reports'],
+    description: 'Najpopularniejsze pojazdy',
+    notes: 'Zwraca pojazdy posortowane po aktywności (liczba rezerwacji)'
+  },
+  handler: async (request, h) => {
+    if (!await isAdmin(request)) return h.response({ message: 'Brak dostępu' }).code(403);
+
+    const topVehicles = await Vehicle.aggregate([
+  {
+    $lookup: {
+      from: 'activities',
+      localField: '_id',
+      foreignField: 'vehicle',
+      as: 'activities'
+    }
+  },
+  {
+    $addFields: {
+      activityCount: { $size: '$activities' }
+    }
+  },
+  {
+    $project: {
+      _id: 0,
+      make: 1,
+      model: 1,
+      activityCount: 1
+    }
+  },
+  { $sort: { activityCount: -1 } },
+  { $limit: 10 }
+]);
+
+    return topVehicles
+  }
+}
+    
 ];
 
 module.exports = adminRoutes;

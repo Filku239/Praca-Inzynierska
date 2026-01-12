@@ -8,7 +8,29 @@ import { API_BASE_URL, COLORS } from './constants/Config';
 export default function MyVehicles() {
   const [vehicles, setVehicles] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [loadingReservations, setLoadingReservations] = useState({});
   const navigation = useNavigation();
+
+  const loadReservationsForVehicle = async (vehicleId) => {
+    try {
+      setLoadingReservations(prev => ({ ...prev, [vehicleId]: true }));
+      const token = await AsyncStorage.getItem('token');
+      const res = await axios.get(`${API_BASE_URL}/vehicles/${vehicleId}/reservations`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+       console.log('res (PEŁNY):', res);
+      setVehicles(prev =>
+        prev.map(v =>
+          v._id === vehicleId ? { ...v, reservations: res.data } : v
+        )
+      );
+    } catch (err) {
+      console.error('Błąd pobierania rezerwacji:', err.response?.data || err.message);
+      Alert.alert('Błąd', 'Nie udało się pobrać rezerwacji.');
+    } finally {
+      setLoadingReservations(prev => ({ ...prev, [vehicleId]: false }));
+    }
+  };
 
   const loadVehicles = async () => {
     try {
@@ -21,8 +43,9 @@ export default function MyVehicles() {
         headers: { Authorization: `Bearer ${token}` }
       });
 
-       console.log('Pełna odpowiedź API:', res);
+      console.log('Pełna odpowiedź API:', res);
       setVehicles(res.data || []);
+      (res.data || []).forEach(vehicle => loadReservationsForVehicle(vehicle._id));
     } catch (err) {
       console.error('Błąd pobierania pojazdów:', err.response?.data || err.message);
       Alert.alert('Błąd', 'Nie udało się pobrać Twoich pojazdów.');
@@ -56,6 +79,40 @@ export default function MyVehicles() {
             } catch (err) {
               console.error('Błąd usuwania pojazdu:', err.response?.data || err.message);
               Alert.alert('Błąd', 'Nie udało się usunąć pojazdu.');
+            }
+          },
+          style: 'destructive'
+        }
+      ]
+    );
+  };
+
+  const handleDeleteReservation = async (vehicleId, reservationId) => {
+      console.log('reservationId RAW:', JSON.stringify(reservationId));
+    Alert.alert(
+      'Potwierdź usunięcie rezerwacji',
+      'Czy na pewno chcesz usunąć tę rezerwację?',
+      [
+        { text: 'Anuluj', style: 'cancel' },
+        {
+          text: 'Usuń',
+          onPress: async () => {
+            try {
+              const token = await AsyncStorage.getItem('token');
+              await axios.delete(`${API_BASE_URL}/reservations/${reservationId}`, {
+                headers: { Authorization: `Bearer ${token}` }
+              });
+              setVehicles(prev =>
+                prev.map(v =>
+                  v._id === vehicleId
+                    ? { ...v, reservations: v.reservations.filter(r => r._id !== reservationId) }
+                    : v
+                )
+              );
+              Alert.alert('Usunięto', 'Rezerwacja została usunięta.');
+            } catch (err) {
+              console.error('Błąd usuwania rezerwacji:', err.response?.data || err.message);
+              Alert.alert('Błąd', 'Nie udało się usunąć rezerwacji.');
             }
           },
           style: 'destructive'
@@ -102,7 +159,6 @@ export default function MyVehicles() {
             <Text style={styles.vehicleName}>{vehicle.make} {vehicle.model}</Text>
             <Text style={styles.small}>Rok: {vehicle.year}</Text>
             <Text style={styles.small}>Cena: {vehicle.rentalPricePerDay} PLN/dzień</Text>
-
             <View style={styles.actions}>
               <TouchableOpacity
                 style={styles.detailButton}
@@ -110,7 +166,6 @@ export default function MyVehicles() {
               >
                 <Text style={styles.buttonText}>Edytuj</Text>
               </TouchableOpacity>
-
               <TouchableOpacity
                 style={styles.deleteButton}
                 onPress={() => handleDeleteVehicle(vehicle._id)}
@@ -118,9 +173,24 @@ export default function MyVehicles() {
                 <Text style={styles.buttonText}>Usuń</Text>
               </TouchableOpacity>
             </View>
+            {loadingReservations[vehicle._id] && (
+              <ActivityIndicator size="small" color={COLORS.secondary} style={{ marginTop: 5 }} />
+            )}
+            {vehicle.reservations && vehicle.reservations.map((res, index) => (
+              <View key={index} style={styles.reservationCard}>
+                <Text>
+                  <Text style={{ fontWeight: '700' }}>Od: </Text>{res.startDate} <Text style={{ fontWeight: '700' }}>Do: </Text>{res.endDate}
+                </Text>
+                <TouchableOpacity
+                  onPress={() => handleDeleteReservation(vehicle._id, res._id)}
+                  style={styles.deleteButtonSmall}
+                >
+                  <Text style={styles.buttonText}>Usuń rezerwację</Text>
+                </TouchableOpacity>
+              </View>
+            ))}
           </View>
         </View>
-
       ))}
     </ScrollView>
   );
@@ -195,6 +265,18 @@ const styles = StyleSheet.create({
   buttonText: {
     color: COLORS.white,
     fontWeight: '700'
+  },
+  reservationCard: {
+    backgroundColor: COLORS.border,
+    padding: 8,
+    borderRadius: 8,
+    marginTop: 5
+  },
+  deleteButtonSmall: {
+    backgroundColor: COLORS.secondary,
+    padding: 5,
+    borderRadius: 5,
+    marginTop: 5,
+    alignItems: 'center'
   }
 });
-

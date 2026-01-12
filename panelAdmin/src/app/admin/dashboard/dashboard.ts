@@ -2,9 +2,9 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
 import { AdminNavbarComponent } from '../../admin-navbar/admin-navbar';
 import { AdminService } from '../../core/services/admin';
+import { AdminReports } from '../admin-reports/admin-reports';
 
 interface DashboardStats {
   vehicles: number;
@@ -15,7 +15,7 @@ interface DashboardStats {
 @Component({  
   selector: 'dashboard',
   standalone: true,
-  imports: [RouterModule, CommonModule, AdminNavbarComponent, HttpClientModule],
+  imports: [RouterModule, CommonModule, AdminNavbarComponent, AdminReports],
   templateUrl: './dashboard.html',
   styleUrls: ['./dashboard.css']
 })

@@ -190,7 +190,7 @@ export default function SingleVehicleScreen({ route, navigation }) {
   if (loading && !vehicle) {
     return (
       <View style={styles.centerContainer}>
-        <ActivityIndicator size="large" color={COLORS.primary} />
+        <ActivityIndicator size="large" color={COLORS.primary} testID="loading-indicator"/>
       </View>
     );
   }

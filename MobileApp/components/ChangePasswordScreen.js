@@ -93,7 +93,7 @@ export default function ChangePasswordScreen({ navigation }) {
         />
       </View>
 
-      <TouchableOpacity style={styles.saveButton} onPress={handleChangePassword}>
+      <TouchableOpacity style={styles.saveButton} onPress={handleChangePassword} testID="changePasswordButton">
         <Text style={styles.saveText}>Zmień hasło</Text>
       </TouchableOpacity>
     </View>

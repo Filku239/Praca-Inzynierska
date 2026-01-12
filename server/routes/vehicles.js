@@ -118,6 +118,7 @@ module.exports = [{
                 const endISO = `${end.getUTCFullYear()}-${pad(end.getUTCMonth() + 1)}-${pad(end.getUTCDate())}`;
 
                 return {
+                    _id: r._id,
                     startDate: startISO,
                     endDate: endISO,
                 };

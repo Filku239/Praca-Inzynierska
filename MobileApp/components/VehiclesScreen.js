@@ -11,7 +11,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import axios from 'axios';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 
 const { width } = Dimensions.get('window');
 const ITEM_WIDTH = (width - 48) / 2;
@@ -43,21 +43,26 @@ export default function VehiclesScreen() {
     { label: 'Ciężarowy', value: 'ciezarowy' },
   ];
 
-  useEffect(() => {
-    const fetchVehicles = async () => {
-      try {
-        const res = await axios.get(`${BACKEND_URL}/vehicles/accepted`);
-        setVehicles(res.data);
-        setFilteredVehicles(res.data);
-      } catch (err) {
-        console.error(err);
-        setError('Nie udało się pobrać pojazdów');
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchVehicles();
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      const fetchVehicles = async () => {
+        try {
+          const res = await axios.get(`${BACKEND_URL}/vehicles/accepted`);
+          setVehicles(res.data);
+          setFilteredVehicles(res.data);
+        } catch (err) {
+          console.error(err);
+          setError('Nie udało się pobrać pojazdów');
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      fetchVehicles();
+
+      return () => {};
+    }, [])
+  );
 
   useEffect(() => {
     let temp = [...vehicles];

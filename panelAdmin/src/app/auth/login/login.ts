@@ -28,7 +28,6 @@ export class Login {
 
     this.authService.login(this.email, this.password).subscribe({
       next: (res) => {
-        // sprawdzamy czy ma uprawnienia admina
         if (res.role !== 'admin') {
           alert('Dostęp tylko dla administratora');
           this.authService.logout();

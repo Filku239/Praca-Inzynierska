@@ -1,4 +1,4 @@
-const requireOwnReservation = require('../middlewares/reservationCheck.js');
+const ownReservationCheck = require('../middlewares/reservationCheck');
 const Reservation = require('../models/reservation');
 
 module.exports = [{
@@ -88,7 +88,7 @@ module.exports = [{
             tags: ['api', 'reservations'],
             description: 'Edytuj rezerwację',
             notes: 'Pozwala edytować daty rezerwacji; tylko właściciel lub admin',
-            pre: [requireOwnReservation()],
+            pre: [ownReservationCheck],
             validate: {
                 params: require('joi').object({
                     id: require('joi').string().required()
@@ -125,12 +125,7 @@ module.exports = [{
             tags: ['api', 'reservations'],
             description: 'Usuń rezerwację',
             notes: 'Usuwa rezerwację; tylko właściciel lub admin',
-            pre: [requireOwnReservation()],
-            validate: {
-                params: require('joi').object({
-                    id: require('joi').string().required()
-                })
-            }
+            pre: [ownReservationCheck]
         },
         handler: async (request, h) => {
             const id = request.params.id;

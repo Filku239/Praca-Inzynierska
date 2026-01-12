@@ -5,13 +5,10 @@ import { VehicleModel } from './vehicle';
 
 export interface ReservationModel {
   _id: string;
-
   vehicle: VehicleModel;
   user: string;
-
   startDate: string; 
   endDate: string;  
-
   cost: number;
 }
 

@@ -96,7 +96,7 @@ export default function ProfileScreen() {
 
       <TouchableOpacity style={styles.sectionCard} onPress={() => navigation.navigate('History')}>
         <Text style={styles.sectionTitle}>Historia i rezerwacje</Text>
-        <Text style={styles.sectionDesc}>Twoje ostatnie sprawdzenia pojazdów</Text>
+        <Text style={styles.sectionDesc}>Twoje aktywności oraz dokonane rezerwacje</Text>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.sectionCard} onPress={() => navigation.navigate('MyVehicles')}>

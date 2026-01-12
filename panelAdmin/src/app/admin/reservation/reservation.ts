@@ -78,7 +78,6 @@ export class Reservation implements OnInit {
     );
   });
 
-  // SORTOWANIE
   if (this.sortBy !== 'none') {
     result = result.sort((a, b) => {
       let aVal = 0;

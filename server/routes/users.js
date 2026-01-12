@@ -123,7 +123,7 @@
                 const token = jwt.sign(
                     { sub: user._id.toString(), id: user._id.toString(), role: user.role }, 
                     process.env.JWT_SECRET, 
-                    { expiresIn: '15m' }
+                    { expiresIn: '30m' }
                 );
 
                 return h.response({ 
@@ -253,7 +253,7 @@
                     const token = jwt.sign(
                         { sub: user._id.toString(), id: user._id.toString(), role: user.role },
                         process.env.JWT_SECRET,
-                        { expiresIn: '15m' }
+                        { expiresIn: '30m' }
                     );
 
                     return h.response({
